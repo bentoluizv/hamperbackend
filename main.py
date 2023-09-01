@@ -1,10 +1,7 @@
-from flask import Flask
+from project import create_app
 
-app = Flask(__name__)
-
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World {name}!</p>".format(name=__name__)
+"""Arquivo para execução da aplicação"""
+app = create_app()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port=5000, host="0.0.0.0")
