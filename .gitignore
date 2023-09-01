@@ -1,1 +1,5 @@
+#.virtualenv
 .venv
+
+#vscode
+.vscode
