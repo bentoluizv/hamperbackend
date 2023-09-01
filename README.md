@@ -7,7 +7,7 @@ BackEnd do projeto DeliveryAPP
 ```
 export FLASK_ENV=default
 ```
-### Ambiente development
+### Ambiente desenvolvimento
 ```
 export FLASK_ENV=development
 ```
