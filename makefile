@@ -1,5 +1,4 @@
 #bash/sh
-
 up:
 	python main.py
 
@@ -13,8 +12,8 @@ upgrade:
 	flask db upgrade
 
 env-default:
-	export FLASK_APP=project
 	export FLASK_ENV=default
+	export FLASK_APP=project
 	python main.py
 
 env-development:

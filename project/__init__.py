@@ -15,6 +15,7 @@ Migrate()
 
 def create_app():
     app = Flask(__name__)
+    FlaskDynaconf(app)
 
     if os.environ.get('FLASK_ENV') == 'testing':
         app.config.from_object('databases.test_config.TestConfigurations')
@@ -27,10 +28,8 @@ def create_app():
     else:
         raise ValueError('FLASK_ENV inválido')
 
-    FlaskDynaconf(app)
+    views.init_app(app)
     db.init_app(app)
     Migrate(app, db)
-
-    views.init_app(app)
 
     return app

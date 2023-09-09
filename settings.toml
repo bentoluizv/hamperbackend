@@ -7,13 +7,10 @@ DATABASE_URL = "sqlite:///db.sqlite"
 
 [development]
 APP_NAME = "${secrets.development.APP_NAME}"
-DATABASE = "postgresql"
+DATABASE = "sqlite"
 DEBUG = "${secrets.development.DEBUG}"
 SECRET_KEY = "${secrets.development.SECRET_KEY}"
-POSTGRES_USER = "${secrets.development.POSTGRES_USER}"
-POSTGRES_PASSWORD = "${secrets.development.POSTGRES_PASSWORD}"
-POSTGRES_HOST = "${secrets.development.POSTGRES_HOST}"
-POSTGRES_DB = "${secrets.development.POSTGRES_DB}"
+DATABASE_URL = "${secrets.development.DATABASE_URL}"
 
 [testing]
 APP_NAME = "${secrets.testing.APP_NAME}"
