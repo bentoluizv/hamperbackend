@@ -3,7 +3,11 @@ APP_NAME = "project"
 DATABASE = "sqlite"
 DEBUG = true
 SECRET_KEY = "548JM6@aK!pO|DN:US,xUG6zF52yZXP"
-DATABASE_URL = "sqlite:///db.sqlite"
+SQLALCHEMY_DATABASE_URI = "sqlite:///db.sqlite"
+EXTENSIONS = [
+    "project.ext.restapi:init_app",
+    "project.ext.database:init_app"
+]
 
 [development]
 APP_NAME = "${secrets.development.APP_NAME}"
