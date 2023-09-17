@@ -1,10 +1,9 @@
 from flask_restx import Namespace
 
-
 restaurant_ns = Namespace(name='Restaurant',
-                      description='Manage restaurant',
-                      path='/')
+                          description='Manage restaurant',
+                          path='/')
 
 user_ns = Namespace(name='User',
-                      description='Manage user',
-                      path='/')
+                    description='Manage user',
+                    path='/')

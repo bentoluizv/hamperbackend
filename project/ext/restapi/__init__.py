@@ -1,8 +1,9 @@
 from flask import Blueprint
 from flask_restx import Api
 
-from project.utils.namespace import restaurant_ns, user_ns
 from project.controller.user_controller import UserResource
+from project.utils.namespace import restaurant_ns, user_ns
+
 from ...controller.restaurant_controller import RestaurantResource
 
 bp = Blueprint("restapi", __name__, url_prefix="/api/v1")
