@@ -8,3 +8,7 @@ restaurant_ns = Namespace(name='Restaurant',
 user_ns = Namespace(name='User',
                       description='Manage user',
                       path='/')
+
+product_ns = Namespace(name='Product',
+                      description='Manage product',
+                      path='/')
