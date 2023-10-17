@@ -13,5 +13,4 @@ def create_app(**config):
 
 
 def create_app_wsgi():
-    app = create_app()
-    return app
+    return create_app()
