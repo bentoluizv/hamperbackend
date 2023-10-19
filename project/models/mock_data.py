@@ -1,8 +1,11 @@
 """Dados estáticos para uso em desenvolvimento"""
 mock_restaurants = [
-    {"id": 1, "name": "Bóde do Nô", "description": "Descrrição do restaurante",
-     "classification": 4.9, "location": "Recife-PE",
-     "url_image_logo": "url_logo", "url_image_banner": "url_banner"},
+    {"id": 1, "name": "Bóde do Nô",
+     "description": "Descrrição do restaurante",
+     "classification": 4.9,
+     "location": "Recife-PE",
+     "url_image_logo": "url_logo",
+     "url_image_banner": "url_banner"},
     {"id": 2, "name": "Imperador dos camarões",
      "description": "Descrrição do restaurante", "classification": 4.8,
      "location": "Maceió-AL", "url_image_logo": "url_logo",
