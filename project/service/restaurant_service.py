@@ -14,7 +14,7 @@ def get_all_restaurants():
                 'classification': restaurant.classification,
                 'location': restaurant.location,
                 'url_image_logo': restaurant.url_image_logo,
-                'url_image_banner': restaurant.url_image_banner
+                'url_image_banner': restaurant.url_image_banner,
             }
             restaurant_list.append(restaurant_data)
     return restaurant_list

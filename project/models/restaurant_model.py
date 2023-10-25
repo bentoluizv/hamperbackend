@@ -11,6 +11,7 @@ class Restaurant(db.Model):
     url_image_banner = db.Column(db.String(), nullable=True)
 
 
+
     def __init__(self, name, description, classification, location, url_image_logo, url_image_banner):
         self.name = name
         self.description = description
