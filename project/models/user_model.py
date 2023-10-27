@@ -7,5 +7,15 @@ class User(db.Model):
     lastname = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
 
-    def __init__(self, firstname):
+    def __init__(self, firstname, lastname, email):
         self.firstname = firstname
+        self.lastname = lastname
+        self.email = email
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'firstname': self.firstname,
+            'lastname': self.lastname,
+            'email': self.email
+        }
