@@ -10,6 +10,7 @@
 
 # Diretório virtualenv (se estiver usando um ambiente virtual)
 /venv/
+Pipfile
 
 # Arquivos e diretórios específicos do Visual Studio Code
 .vscode/
