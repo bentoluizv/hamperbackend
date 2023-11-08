@@ -27,8 +27,6 @@ class ProductResourceId(Resource):
     def get(self, id):
         if product := get_one_product(id):
             return product, 200
-        else:
-            return {'message': 'Product not found'}, 404
 
     @api.doc(params={'id': 'ID of the product',
                      'name': 'Name of the product',

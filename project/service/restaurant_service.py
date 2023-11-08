@@ -26,14 +26,14 @@ def post_restaurant():
     restaurant = Restaurant(**dados)
     db.session.add(restaurant)
     db.session.commit()
-    return {'message': 'Restaurante criado com sucesso'}, 201
+    return {'message': 'Successfully created restaurant'}, 201
 
 
 def get_one_restaurant(id):
     if restaurant := Restaurant.query.get(id):
         return restaurant.to_dict()
     else:
-        return {'message': 'Restaurante not found'}, 404
+        return {'message': 'Restaurant not found'}, 404
 
 
 def put_one_restaurant(id):
@@ -48,13 +48,13 @@ def put_one_restaurant(id):
         db.session.commit()
         return restaurant.to_dict()
     else:
-        return {'message': 'Restaurante not found'}, 404
+        return {'message': 'Restaurant not found'}, 404
 
 
 def delete_restaurant(id):
     if restaurant := Restaurant.query.get(id):
         db.session.delete(restaurant)
         db.session.commit()
-        return {'message': 'Restaurante deletado'}
+        return {'message': 'Restaurant deleted'}
     else:
-        return {'message': 'Restaurante not found'}, 404
+        return {'message': 'Restaurant not found'}, 404

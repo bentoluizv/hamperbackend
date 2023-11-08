@@ -38,7 +38,7 @@ O DeliveryAPP é um aplicativo de delivery que oferece aos restaurantes a capaci
 ```
 [
     {
-        "message": "Restaurante criado com sucesso"
+        "message": "Successfully created restaurant"
     },
     201
 ]
@@ -84,7 +84,7 @@ O DeliveryAPP é um aplicativo de delivery que oferece aos restaurantes a capaci
 #### Response:
 ```
 {
-    "message": "Product deleted"
+    "message": "Restaurant deleted"
 }
 ```
 
@@ -110,17 +110,58 @@ O DeliveryAPP é um aplicativo de delivery que oferece aos restaurantes a capaci
     "value": 20,
     "description": "Bacon",
     "url_image": "url_image",
-    "restaurant_id": 2
+    "restaurant_id": 1
 }
 ```
 #### Response:
 ```
 [
     {
-        "message": "Produto criado com sucesso"
+        "message": "Successfully created product"
     },
     201
 ]
+```
+### GET - /api/v1/product/1
+#### Response:
+```
+{
+    "id": 1,
+    "name": "X-Bacon",
+    "value": 20.0,
+    "description": "Bacon",
+    "url_image": "url_image",
+    "restaurant_id": 1
+}
+```
+### PUT - /api/v1/product/1
+#### Request Body:
+```
+{
+    "name": "X-Frango",
+    "value": 20.0,
+    "description": "Frango",
+    "url_image": "url_image",
+    "restaurant_id": 1
+}
+``` 
+#### Response:
+```
+{
+    "id": 1,
+    "name": "X-Frango",
+    "value": 20.0,
+    "description": "Frango",
+    "url_image": "url_image",
+    "restaurant_id": 1
+}
+```
+### DELETE - /api/v1/product/1
+#### Response:
+```
+{
+    "message": "Product deleted"
+}
 ```
 
 

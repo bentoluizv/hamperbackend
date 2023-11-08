@@ -25,7 +25,7 @@ def post_product():
     product = Product(**dados)
     db.session.add(product)
     db.session.commit()
-    return {"message": "Produto criado com sucesso"}, 201
+    return {"message": "Successfully created product"}, 201
 
 
 def get_one_product(id):

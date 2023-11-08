@@ -34,8 +34,6 @@ class RestaurantResourceId(Resource):
     def get(self, id):
         if restaurant := get_one_restaurant(id):
             return restaurant, 200
-        else:
-            return {'message': 'Restaurant not found'}, 404
 
     @api.doc(params={'id': 'ID of the restaurant'})
     def put(self, id):
@@ -45,9 +43,5 @@ class RestaurantResourceId(Resource):
 
     @api.doc(params={'id': 'ID of the restaurant'})
     def delete(self, id):
-        if restaurant := delete_restaurant(id):
-            db.session.delete(restaurant)
-            db.session.commit()
-            return {'message': 'Restaurant deleted'}
-        else:
-            return {'message': 'Restaurant not found'}, 404
+        restaurant = delete_restaurant(id)
+        return restaurant, 200
