@@ -43,6 +43,50 @@ O DeliveryAPP é um aplicativo de delivery que oferece aos restaurantes a capaci
     201
 ]
 ```
+### GET - /api/v1/restaurant/1
+#### Response:
+```
+{
+    "id": 1,
+    "name": "Boi na Brasa",
+    "description": "Descrição do restaurante",
+    "classification": 4.9,
+    "location": "Fortaleza-CE",
+    "url_image_logo": "url_logo",
+    "url_image_banner": "url_banner"
+}
+```
+### PUT - /api/v1/restaurant/1
+#### Request Body:
+```
+{
+    "name": "Imperador dos peixes",
+    "description": "Descrição do restaurante",
+    "classification": 4.8,
+    "location": "Maceió-AL",
+    "url_image_logo": "url_logo",
+    "url_image_banner": "url_banner"
+}
+``` 
+#### Response:
+```
+{
+    "id": 1,
+    "name": "Imperador dos peixes",
+    "description": "Descrição do restaurante",
+    "classification": 4.8,
+    "location": "Maceió-AL",
+    "url_image_logo": "url_logo",
+    "url_image_banner": "url_banner"
+}
+```
+### DELETE - /api/v1/restaurant/1
+#### Response:
+```
+{
+    "message": "Product deleted"
+}
+```
 
 ## Product
 
