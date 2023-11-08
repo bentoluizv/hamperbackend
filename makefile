@@ -1,6 +1,6 @@
 #bash/sh
 up:
-	python main.py
+	python -m project run
 
 db-init:
 	flask db init
