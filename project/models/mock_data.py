@@ -1,4 +1,5 @@
 """Dados estáticos para uso em desenvolvimento"""
+
 mock_restaurants = [
     {"id": 1, "name": "Bóde do Nô",
      "description": "Descrição do restaurante",
@@ -58,4 +59,58 @@ mock_users = [
      "firstname": "Steve",
      "lastname": "Rogers",
      "email": "captainamerica@icloud.com"}
+]
+
+mock_clients = [
+    {"id": 1,
+     "client_name": "Tony",
+     "client_cellphone": "999999999",
+     "client_address": "Avenida da Paz",
+     "client_address_number": 123,
+     "client_address_complement": "Casa A",
+     "client_address_neighborhood": "Centro",
+     "client_zip_code": "12345678"},
+    {"id": 2,
+     "client_name": "Peter",
+     "client_cellphone": "3199999955",
+     "client_address": "Avenida da Aricanduva",
+     "client_address_number": 321,
+     "client_address_complement": "Casa B",
+     "client_address_neighborhood": "Centro",
+     "client_zip_code": "87654321"},
+     {"id": 3,
+     "client_name": "Bruce",
+     "client_cellphone": "3199999966",
+     "client_address": "Avenida da Paulista",
+     "client_address_number": 213,
+     "client_address_complement": "Condomínio ABC",
+     "client_address_neighborhood": "Centro",
+     "client_zip_code": "12344321"}
+]
+
+mock_orders = [
+    {
+        "id": 1,
+        "client_id": 1,
+        "restaurant_id": 1,
+        "products": [1,2]
+    },
+    {
+        "id": 2,
+        "client_id": 2,
+        "restaurant_id": 2,
+        "products": [3,4]
+    },
+    {
+        "id": 3,
+        "client_id": 3,
+        "restaurant_id": 3,
+        "products": [5]
+    },
+    {
+        "id": 4,
+        "client_id": 4,
+        "restaurant_id": 2,
+        "products": [1,2,3,4]
+    }
 ]
