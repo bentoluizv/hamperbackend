@@ -11,3 +11,11 @@ user_ns = Namespace(name='User',
 product_ns = Namespace(name='Product',
                        description='Manage product',
                        path='/')
+
+client_ns = Namespace(name='Client',
+                       description='Manage client',
+                       path='/')
+
+order_ns = Namespace(name='Order',
+                      description='Manage order',
+                      path='/')
