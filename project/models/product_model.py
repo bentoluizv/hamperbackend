@@ -1,3 +1,5 @@
+# from project.models.restaurant_model import Restaurant
+
 from ..ext.database import db
 
 products_restaurants = db.Table(
@@ -16,8 +18,8 @@ class Product(db.Model):
     restaurant_id = db.Column(
         db.Integer, db.ForeignKey("restaurant.id"), nullable=False
     )
-    restaurants = db.relationship(
-        "Restaurant", secondary=products_restaurants, backref="products"
+    associated_restaurants = db.relationship(
+        "Restaurant", secondary=products_restaurants, backref="associated_products"
     )
 
     def __init__(self, name, value, description, url_image, restaurant_id):

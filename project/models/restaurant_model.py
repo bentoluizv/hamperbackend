@@ -1,9 +1,11 @@
+from project.models.product_model import Product
+
 from ..ext.database import db
 
 
 class Restaurant(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(20), nullable=False)
+    name = db.Column(db.String(20), unique=True, nullable=False)
     description = db.Column(db.String(120), nullable=False)
     classification = db.Column(db.Float(precision=3), nullable=False)
     location = db.Column(db.String(120), nullable=False)
