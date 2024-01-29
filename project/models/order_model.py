@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from project.models.client_model import Client
-from project.models.product_model import Product
 from project.models.restaurant_model import Restaurant
 
 from ..ext.database import db
@@ -14,10 +13,10 @@ order_product_association = db.Table(
 
 
 class Order(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    client_id = db.Column(db.Integer, db.ForeignKey(Client.id))
-    restaurant_id = db.Column(db.Integer, db.ForeignKey(Restaurant.id))
+    id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    created_at: datetime = db.Column(db.DateTime, default=datetime.utcnow)
+    client_id: int = db.Column(db.Integer, db.ForeignKey(Client.id))
+    restaurant_id: int = db.Column(db.Integer, db.ForeignKey(Restaurant.id))
     products = db.relationship(
         "Product",
         secondary=order_product_association,
