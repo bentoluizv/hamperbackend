@@ -1,34 +1,27 @@
 [default]
 APP_NAME = "project"
 DATABASE = "sqlite"
-DEBUG = true
 SECRET_KEY = "548JM6@aK!pO|DN:US,xUG6zF52yZXP"
-SQLALCHEMY_DATABASE_URI = "sqlite:///db.sqlite"
+SQLALCHEMY_TRACK_MODIFICATIONS = false
 EXTENSIONS = [
     "project.ext.restapi:init_app",
     "project.ext.database:init_app"
 ]
 
 [development]
-APP_NAME = "${secrets.development.APP_NAME}"
-DATABASE = "sqlite"
-DEBUG = "${secrets.development.DEBUG}"
-SECRET_KEY = "${secrets.development.SECRET_KEY}"
-DATABASE_URL = "${secrets.development.DATABASE_URL}"
+FLASK_ENV = "development"
+INCLUDES = ["default"]
+TEMPLATES_AUTO_RELOAD = true
+DEBUG = true
+SQLALCHEMY_DATABASE_URI = 'sqlite:///db.development.dynaconf.sqlite'
 
 [testing]
-APP_NAME = "${secrets.testing.APP_NAME}"
-DATABASE = "sqlite"
-DEBUG = "${secrets.testing.DEBUG}"
-SECRET_KEY = "${secrets.testing.SECRET_KEY}"
-DATABASE_URL = "${secrets.testing.DATABASE_URL}"
+FLASK_ENV = "testing"
+INCLUDES = ["default"]
+SQLALCHEMY_DATABASE_URI = "sqlite:///db.testing.sqlite"
+DEBUG = true
 
 [production]
-APP_NAME = "project"
-DATABASE = "postgresql"
-DEBUG = "${secrets.development.DEBUG}"
-SECRET_KEY = "${secrets.production.SECRET_KEY}"
-POSTGRES_USER = "${secrets.production.POSTGRES_USER}"
-POSTGRES_PASSWORD = "${secrets.production.POSTGRES_PASSWORD}"
-POSTGRES_HOST = "${secrets.production.POSTGRES_HOST}"
-POSTGRES_DB = "${secrets.production.POSTGRES_DB}"
+FLASK_ENV = "production"
+INCLUDES = ["default"]
+SQLALCHEMY_DATABASE_URI = "postgresql://slj_user:WEUOkN2UVuZzZdTRUcLHrCZA52pNSWPf@dpg-cms2j6821fec73civqtg-a.oregon-postgres.render.com/slj_database"

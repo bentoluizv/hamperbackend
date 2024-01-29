@@ -2,6 +2,10 @@
 up:
 	python -m project run
 
+up-prod:
+	FLASK_ENV=production && gunicorn -w 4 -b 0.0.0.0:5000 "project:create_app()"
+
+
 db-init:
 	flask db init
 
