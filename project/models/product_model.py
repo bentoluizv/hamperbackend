@@ -1,3 +1,5 @@
+# from project.models.restaurant_model import Restaurant
+
 from ..ext.database import db
 
 products_restaurants = db.Table(
@@ -8,16 +10,16 @@ products_restaurants = db.Table(
 
 
 class Product(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(40), nullable=False, unique=False)
-    value = db.Column(db.Float(precision=6), nullable=False)
-    description = db.Column(db.String(120), nullable=False)
-    url_image = db.Column(db.String(), nullable=True)
-    restaurant_id = db.Column(
+    id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name: str = db.Column(db.String(40), nullable=False, unique=False)
+    value: float = db.Column(db.Float(precision=6), nullable=False)
+    description: str = db.Column(db.String(120), nullable=False)
+    url_image: str = db.Column(db.String(), nullable=True)
+    restaurant_id: int = db.Column(
         db.Integer, db.ForeignKey("restaurant.id"), nullable=False
     )
-    restaurants = db.relationship(
-        "Restaurant", secondary=products_restaurants, backref="products"
+    associated_restaurants = db.relationship(
+        "Restaurant", secondary=products_restaurants, backref="associated_products"
     )
 
     def __init__(self, name, value, description, url_image, restaurant_id):

@@ -13,9 +13,9 @@ product_ns = Namespace(name='Product',
                        path='/')
 
 client_ns = Namespace(name='Client',
-                       description='Manage client',
-                       path='/')
+                      description='Manage client',
+                      path='/')
 
 order_ns = Namespace(name='Order',
-                      description='Manage order',
-                      path='/')
+                     description='Manage order',
+                     path='/')
