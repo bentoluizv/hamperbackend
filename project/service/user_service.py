@@ -1,27 +1,26 @@
-# from ..models.user_model import User
-# from ..models.mock_data import mock_users
+from flask import request
 from ..ext.database import db
 from ..models.user_model import User
 
 
 def get_all_users():
-    users = User.query.all()
-    return [user.to_dict() for user in users]
+    return User.query.all()
 
 
 def post_user(user_data):
-    new_user = User(
-        firstname=user_data.get("firstname"),
-        lastname=user_data.get("lastname"),
-        email=user_data.get("email"),
-    )
-    db.session.add(new_user)
+    user_data = request.get_json()
+    user = User(**user_data)
+    db.session.add(user)
     db.session.commit()
-    return {"message": "Usuário cadastrado com sucesso!"}, 201
+
+
+def get_one_user(user_id):
+    return user if (user := User.query.get(user_id)) else None
 
 
 def update_user(user_id, updated_data):
     user = get_one_user(user_id)
+
     if user is None:
         return {"error": f"Usuário com ID {user_id} não encontrado"}
 
@@ -39,6 +38,7 @@ def update_user(user_id, updated_data):
 
 def delete_user(id):
     user = get_one_user(id)
+    
     if user is None:
         return {"error": f"Usuário com ID {id} não encontrado"}
 
@@ -50,7 +50,3 @@ def delete_user(id):
     except Exception as e:
         db.session.rollback()
         return {"error": str(e)}
-
-
-def get_one_user(user_id):
-    return user if (user := User.query.get(user_id)) else None

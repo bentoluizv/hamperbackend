@@ -1,4 +1,3 @@
-
      #####Opcional o uso dos comandos 'make'#####
 
 # Descrição dos comandos e atalhos na aplicação

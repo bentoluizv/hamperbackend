@@ -1,4 +1,5 @@
 """Dados estáticos para uso em desenvolvimento"""
+
 mock_restaurants = [
     {"id": 1, "name": "Bóde do Nô", "description": "Descrrição do restaurante",
      "classification": 4.9, "location": "Recife-PE",
