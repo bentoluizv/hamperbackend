@@ -25,3 +25,8 @@ DEBUG = true
 FLASK_ENV = "production"
 INCLUDES = ["default"]
 SQLALCHEMY_DATABASE_URI = "postgresql://slj_user:WEUOkN2UVuZzZdTRUcLHrCZA52pNSWPf@dpg-cms2j6821fec73civqtg-a.oregon-postgres.render.com/slj_database"
+
+[homologacao]
+FLASK_ENV = "homologacao"
+INCLUDES = ["default"]
+SQLALCHEMY_DATABASE_URI = "postgresql://hpnkbpae:k41SHz9huxu3zVgQhvjq7b7MXYv5n8gK@baasu.db.elephantsql.com/hpnkbpae"
