@@ -35,4 +35,5 @@ def create_app_wsgi():
     Método que inicializa o app
 
     """
+
     return create_app()
