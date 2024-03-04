@@ -36,3 +36,6 @@ env-testing:
 	export FLASK_APP=project
 	export FLASK_ENV=testing
 	python main.py
+
+pylint:
+	pylint project

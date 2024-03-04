@@ -11,8 +11,10 @@ from ...controller.product_controller import ProductResource, ProductResourceID
 from ...controller.restaurant_controller import (RestaurantResource,
                                                  RestaurantResourceID)
 
+
 bp = Blueprint("restapi", __name__, url_prefix="/api/v1")
 api = Api(bp)
+
 
 restaurant_model = api.model(
     "Restaurant",

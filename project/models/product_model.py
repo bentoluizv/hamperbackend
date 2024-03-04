@@ -1,5 +1,3 @@
-# from project.models.restaurant_model import Restaurant
-
 from ..ext.database import db
 
 products_restaurants = db.Table(
@@ -21,20 +19,3 @@ class Product(db.Model):
     associated_restaurants = db.relationship(
         "Restaurant", secondary=products_restaurants, backref="associated_products"
     )
-
-    def __init__(self, name, value, description, url_image, restaurant_id):
-        self.name = name
-        self.value = value
-        self.description = description
-        self.url_image = url_image
-        self.restaurant_id = restaurant_id
-
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "value": self.value,
-            "description": self.description,
-            "url_image": self.url_image,
-            "restaurant_id": self.restaurant_id,
-        }

@@ -36,3 +36,6 @@ SQLAlchemy==2.0.20
 tomli==2.0.1
 typing_extensions==4.7.1
 Werkzeug==2.3.7
+pylint
+flask-marshmallow==0.15.0
+marshmallow-sqlalchemy==1.0.0
