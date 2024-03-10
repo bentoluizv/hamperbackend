@@ -6,7 +6,7 @@ from project.models.order_model import Order
 from project.models.product_model import Product
 from project.models.restaurant_model import Restaurant
 
-# from .twilio_service import send_whatsapp_message
+from ..utils.twilio_utils import send_whatsapp_message
 
 
 def get_all_orders():
@@ -30,7 +30,7 @@ def post_order(order_data):
     db.session.add(new_order)
     db.session.commit()
 
-    # send_whatsapp_message(new_order)
+    send_whatsapp_message(new_order)
 
     return {"message": "Pedido cadastrado com sucesso!"}, 201
 
