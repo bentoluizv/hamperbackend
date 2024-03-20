@@ -24,8 +24,11 @@ def post_order(order_data):
         abort(404, "Um ou mais produtos não foram encontrados.")
 
     products = [Product.query.get(product_id) for product_id in order_data['products']]
+
+    products_value = [product.value for product in products]
+
     new_order = Order(
-        client_id=order_data['client_id'], restaurant_id=order_data['restaurant_id'], products=products
+        client_id=order_data['client_id'], restaurant_id=order_data['restaurant_id'], products=products, total_value=sum(products_value)
     )
     db.session.add(new_order)
     db.session.commit()
@@ -73,3 +76,6 @@ def delete_one_order(id):
     except Exception as e:
         db.session.rollback()
         return {"error": str(e)}
+    
+def total_order_value(order_data):
+    order_data

@@ -13,6 +13,7 @@ def app_testing():
     with app.app_context():
         db.create_all()
 
+
     yield app
 
     with app.app_context():
