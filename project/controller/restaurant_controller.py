@@ -32,8 +32,9 @@ class RestaurantResource(Resource):
 class RestaurantResourceID(Resource):
 
     def get(self, id):
+        print("a")
         if restaurant := get_one_restaurant(id):
-            return restaurant_schema.dump(restaurant), 200  # type: ignore
+            return restaurant  # type: ignore
         else:
             return {"error": f"Restaurante com ID {id} não encontrado."}, 404
         

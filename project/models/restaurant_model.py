@@ -12,3 +12,4 @@ class Restaurant(db.Model):
     products = db.relationship(
         "Product", backref="restaurant", lazy=True
     )
+    
