@@ -104,7 +104,7 @@ order_ns.models["OrderModel"] = order_model
 
 # # Adicionar os recursos aos namespaces
 restaurant_ns.add_resource(RestaurantResource, "/")
-restaurant_ns.add_resource(RestaurantResourceID, "/<int:id>")
+restaurant_ns.add_resource(RestaurantResourceID, "/<int:id>/products")
 
 user_ns.add_resource(UserResource, "/")
 user_ns.add_resource(UserResourceID, "/<int:id>")
