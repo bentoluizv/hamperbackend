@@ -37,4 +37,5 @@ Werkzeug==2.3.7
 pylint
 flask-marshmallow==0.15.0
 marshmallow-sqlalchemy==1.0.0
-twilio==9.0.1
+twilio
+

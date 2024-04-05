@@ -32,6 +32,7 @@ class RestaurantResource(Resource):
 class RestaurantResourceID(Resource):
 
     def get(self, id):
+        print("a")
         if restaurant := get_one_restaurant(id):
             return restaurant  # type: ignore
         else:

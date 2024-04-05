@@ -22,7 +22,6 @@ def app_testing():
         db.create_all()
         seeding_database()
 
-
     yield app
 
     with app.app_context():
@@ -61,3 +60,4 @@ def seeding_database():
         db.session.add(order)
 
     db.session.commit()
+
