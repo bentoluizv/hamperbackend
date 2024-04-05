@@ -11,7 +11,6 @@ Flask-Cors==4.0.0
 Flask-Migrate==4.0.4
 flask-restx==1.1.0
 Flask-SQLAlchemy==3.0.5
-greenlet==2.0.2
 gunicorn==21.2.0
 iniconfig==2.0.0
 itsdangerous==2.1.2
@@ -31,7 +30,6 @@ pytest==8.0.1
 python-dotenv==1.0.0
 pytz==2023.3.post1
 referencing==0.30.2
-rpds-py==0.10.3
 SQLAlchemy==2.0.20
 tomli==2.0.1
 typing_extensions==4.7.1
@@ -40,3 +38,4 @@ pylint
 flask-marshmallow==0.15.0
 marshmallow-sqlalchemy==1.0.0
 twilio
+
