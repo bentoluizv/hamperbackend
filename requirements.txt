@@ -38,4 +38,4 @@ pylint
 flask-marshmallow==0.15.0
 marshmallow-sqlalchemy==1.0.0
 twilio
-
+redis

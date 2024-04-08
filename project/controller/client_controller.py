@@ -1,3 +1,4 @@
+import json
 from flask import abort, request
 from flask_restx import Resource
 from project.ext.serializer import ClientSchema
@@ -5,6 +6,7 @@ from project.ext.serializer import ClientSchema
 from project.service.client_service import (delete_client, get_all_clients,
                                             get_one_client, post_client,
                                             update_client)
+from project.utils.redis_utils import delete_redis_value, get_redis_value, set_redis_value
 
 client_schema_list = ClientSchema(many=True)
 client_schema = ClientSchema(many=False)
@@ -13,14 +15,21 @@ client_schema = ClientSchema(many=False)
 class ClientResource(Resource):
 
     def get(self):
+        key_redis = "clients"
+        clients = get_redis_value(key_redis)
+        if clients:
+            return clients
         clients = get_all_clients()
-        return client_schema_list.dump(clients), 200
+        clients = client_schema_list.dump(clients)
+        set_redis_value(key_redis, json.dumps(clients))
+        return clients, 200
 
 
     def post(self):
         try:
             client_data = request.json
             post_client(client_data)
+            delete_redis_value("clients")
             return {"message": "Cliente cadastrado com sucesso!"}, 201
         
         except Exception as e:
@@ -54,7 +63,8 @@ class ClientResourceID(Resource):
             result = delete_client(id)
 
             if "error" in result:
-                return {"error": result["error"]}, 404 
+                return {"error": result["error"]}, 404
+            delete_redis_value("clients") 
             return {"message": result["message"]}, 200
         
         except Exception as e:
