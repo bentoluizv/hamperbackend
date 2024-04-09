@@ -50,6 +50,7 @@ class OrderResourceID(Resource):
         try:
             order_data = request.json
             result = update_order(id, order_data)
+            delete_redis_value("clients")
             return {"message": result["message"]}, 200
 
         except HTTPException as e:

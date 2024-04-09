@@ -55,6 +55,7 @@ class RestaurantResourceID(Resource):
 
             if "error" in result:
                 abort(404, message=result["error"])
+            delete_redis_value("clients")
             return {"message": result["message"]}, 200
 
         except Exception as e:
