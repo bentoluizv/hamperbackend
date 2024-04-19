@@ -13,6 +13,7 @@ data*
 # Diretório virtualenv (se estiver usando um ambiente virtual)
 /venv/
 venv*
+.venv/*
 
 # Arquivos e diretórios específicos do Visual Studio Code
 .vscode/
