@@ -37,7 +37,8 @@ class RestaurantResourceID(Resource):
         else:
             return {"error": f"Restaurante com ID {id} não encontrado."}, 404
         
-        
+# FIXME: Causando erro nos ambientes de homologação e produção (com o postgresqk) pois ele é mais rigoroso com as restrições not null 
+# na verdade na verdade não é ele exatamente que está causando o erro é sim o product controller 
     def patch(self, id):
         try:
             restaurant_data = request.json

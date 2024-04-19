@@ -37,6 +37,8 @@ venv*
 # Arquivos gerados automaticamente
 *.pyc
 __pycache__/
+**/__pycache__/
+*.pyo
 *.db
 
 # Ambiente virtual Python (se você usa um ambiente virtual)
@@ -44,6 +46,7 @@ __pycache__/
 
 # Dependências Python (exclui o diretório, mas inclui o arquivo de requisitos)
 __pycache__/
+**/__pycache__/
 *.pyc
 *.pyo
 __pycache__/

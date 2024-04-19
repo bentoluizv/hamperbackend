@@ -29,4 +29,5 @@ SQLALCHEMY_DATABASE_URI = "postgresql://slj_user:WEUOkN2UVuZzZdTRUcLHrCZA52pNSWP
 [homologacao]
 FLASK_ENV = "homologacao"
 INCLUDES = ["default"]
-SQLALCHEMY_DATABASE_URI = "postgresql://hpnkbpae:k41SHz9huxu3zVgQhvjq7b7MXYv5n8gK@baasu.db.elephantsql.com/hpnkbpae"
+SQLALCHEMY_DATABASE_URI = "postgresql://postgres_user:pass@localhost:5432/ecommerce"
+
