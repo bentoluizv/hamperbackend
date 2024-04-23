@@ -6,7 +6,7 @@ from sqlite3 import Connection as SQLite3Connection
 
 db = SQLAlchemy()
 
-# FIXME: ADD THIS FUNCTION DEVERIA SER O BASTANTE PARA CORRIGIR O PROBLEMA DA FK NO SQLITE
+#TODO: Add a listener to the Engine object to enable foreign keys in SQLite
 @event.listens_for(Engine, "connect")
 def _set_sqlite_pragma(dbapi_connection, connection_record):
     if isinstance(dbapi_connection, SQLite3Connection):

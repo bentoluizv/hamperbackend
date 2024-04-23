@@ -13,9 +13,8 @@ class Product(db.Model):
     value: float = db.Column(db.Float(precision=6), nullable=False)
     description: str = db.Column(db.String(120), nullable=False)
     url_image: str = db.Column(db.String(), nullable=True)
-    # FIXME: ADD O ONDELETE CASCADE para tentar resolver o problema do delete de restaurante 
     restaurant_id: int = db.Column(
-        db.Integer, db.ForeignKey("restaurant.id", ondelete='CASCADE'), nullable=False
+        db.Integer, db.ForeignKey("restaurant.id"), nullable=False
     )
     associated_restaurants = db.relationship(
         "Restaurant", secondary=products_restaurants, backref="associated_products"

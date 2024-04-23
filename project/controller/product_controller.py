@@ -38,10 +38,6 @@ class ProductResourceID(Resource):
     def patch(self, id):
         try:
             product_data = request.json
-
-            # if 'restaurant_id' not in product_data or product_data['restaurant_id'] is None:
-            #     return {"error": "restaurant_id é necessário"}, 400
-#FIXME: Causando erro nos ambientes de homologação e produção (com o postgresqk) pois quando tentamos deletar um restaurante todos os produtos relacionados a esse restaurante devem ser apagados ai quando um produto fica sem um restaurante o postgres não deixa
             result = update_product(id, product_data)
 
             if "error" in result:
