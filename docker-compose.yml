@@ -1,17 +1,15 @@
-version: '3.8'
-
+version: "3.8"
 services:
-  postgres:
-    image: postgres:14.2
-    container_name: postgres-container
+  dcs-mysql:
+    image: mysql:8.0
+    container_name: dcs-mysql
+    restart: always
     environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword1
+      MYSQL_ROOT_PASSWORD: mypassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - pgdata:/var/lib/postgresql/data
-
-volumes:
-  pgdata:
+      - ./data/mysql:/var/lib/mysql

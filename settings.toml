@@ -13,7 +13,8 @@ FLASK_ENV = "development"
 INCLUDES = ["default"]
 TEMPLATES_AUTO_RELOAD = true
 DEBUG = true
-SQLALCHEMY_DATABASE_URI = 'sqlite:///db.development.dynaconf.sqlite'
+SQLALCHEMY_DATABASE_URI = "mysql://myuser:mypassword@localhost:3306/mydatabase"
+
 
 [testing]
 FLASK_ENV = "testing"

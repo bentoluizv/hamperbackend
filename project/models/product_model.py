@@ -12,7 +12,7 @@ class Product(db.Model):
     name: str = db.Column(db.String(40), nullable=False, unique=False)
     value: float = db.Column(db.Float(precision=6), nullable=False)
     description: str = db.Column(db.String(120), nullable=False)
-    url_image: str = db.Column(db.String(), nullable=True)
+    url_image: str = db.Column(db.String(800), nullable=True)
     restaurant_id: int = db.Column(
         db.Integer, db.ForeignKey("restaurant.id"), nullable=False
     )
