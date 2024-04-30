@@ -13,7 +13,7 @@ FLASK_ENV = "development"
 INCLUDES = ["default"]
 TEMPLATES_AUTO_RELOAD = true
 DEBUG = true
-SQLALCHEMY_DATABASE_URI = 'sqlite:///db.development.dynaconf.sqlite'
+SQLALCHEMY_DATABASE_URI = "postgresql://myuser:mypassword1@localhost:5432/mydatabase"
 
 [testing]
 FLASK_ENV = "testing"
@@ -24,9 +24,9 @@ DEBUG = true
 [production]
 FLASK_ENV = "production"
 INCLUDES = ["default"]
-SQLALCHEMY_DATABASE_URI = "postgresql://slj_user:WEUOkN2UVuZzZdTRUcLHrCZA52pNSWPf@dpg-cms2j6821fec73civqtg-a.oregon-postgres.render.com/slj_database"
+SQLALCHEMY_DATABASE_URI = "postgresql://hamper:H9hx4jWB5SErLZ3jGkagsAcj6AZRpto0@dpg-cookos8l5elc738j9tjg-a.oregon-postgres.render.com/hamper"
 
 [homologacao]
 FLASK_ENV = "homologacao"
 INCLUDES = ["default"]
-SQLALCHEMY_DATABASE_URI = "postgresql://hpnkbpae:k41SHz9huxu3zVgQhvjq7b7MXYv5n8gK@baasu.db.elephantsql.com/hpnkbpae"
+SQLALCHEMY_DATABASE_URI = "postgresql://hamper:H9hx4jWB5SErLZ3jGkagsAcj6AZRpto0@dpg-cookos8l5elc738j9tjg-a.oregon-postgres.render.com/hamper"

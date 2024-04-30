@@ -13,10 +13,20 @@ def get_all_orders():
     return Order.query.all()
 
 
-def post_order(order_data):
-    if not Client.query.get(order_data['client_id']):
-        abort(404, f"Cliente com ID {order_data['client_id']} não encontrado.")
+def save_client(order_data):
+    new_client = Client(
+        client_name=order_data['client_name'], client_cellphone=order_data['client_cellphone'],
+        client_address=order_data['client_address'], client_address_number=order_data['client_address_number'],
+        client_address_complement=order_data['client_address_complement'], client_address_neighborhood=order_data['client_address_neighborhood'],
+        client_zip_code=order_data['client_zip_code']
+    )
+    print(new_client.client_cellphone)
+    print(type(new_client.client_cellphone))
+    db.session.add(new_client)
+    db.session.commit()
 
+
+def post_order(order_data):
     if not Restaurant.query.get(order_data['restaurant_id']):
         abort(404, f"Restaurante com ID {order_data['restaurant_id']} não encontrado.")
 
@@ -27,9 +37,16 @@ def post_order(order_data):
 
     products_value = [product.value for product in products]
 
+    save_client(order_data)
+
+    client = Client.query.filter(Client.client_cellphone == order_data['client_cellphone']).first()
+    if not client:
+        abort(404, f"Cliente com telefone {order_data['client_cellphone']} não encontrado.")
+
     new_order = Order(
-        client_id=order_data['client_id'], restaurant_id=order_data['restaurant_id'], products=products, total_value=sum(products_value)
+        client_id=client.id, restaurant_id=order_data['restaurant_id'], products=products, total_value=sum(products_value)
     )
+    
     db.session.add(new_order)
     db.session.commit()
 

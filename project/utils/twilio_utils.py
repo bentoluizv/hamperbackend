@@ -15,17 +15,24 @@ def send_whatsapp_message(new_order):
       products_info += f"\n- {product.name} - R${product.value}"
 
   formatted_time = new_order.created_at.strftime("%d-%m-%Y - %H:%M:%S")
-
+  
   body = (f"📝 Pedido Recebido! \n"
+          f"\nNúmero do pedido: {new_order.id} \n"
           f"\n👤 Cliente: {client.client_name} \n"
-          f"🍽️  Restaurante: {restaurant.name} \n"
+          f"Telefone: {client.client_cellphone} \n"
+          f"Endereço: {client.client_address} \n"
+          f"Bairro: {client.client_address_neighborhood} \n"
+          f"Número: {client.client_address_number} \n"
+          f"Complemento: {client.client_address_complement} \n"
+          f"CEP: {client.client_zip_code}\n "
+          f"\n🍽️  Restaurante: {restaurant.name} \n"
           f"🛒 Produtos: {products_info} \n"
           f"\n💸 Valor Total: R${new_order.total_value} \n"
           f"📅 Data do Pedido: {formatted_time}")
 
   try:
     account_sid = 'AC07bda34115f9e874de261be356af10d4'
-    auth_token = '6bd237cb8b9e9d4d805922464c96fc1f'
+    auth_token = '051223feaed4bf531f4071e9cca86a2b'
     client = ClientTwilio(account_sid, auth_token)
 
     message = client.messages.create(

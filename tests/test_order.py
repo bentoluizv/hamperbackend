@@ -7,11 +7,16 @@ def test_post_order_return_200(app_testing):
     client = app_testing.test_client()
 
     order_data = {
-        "client_id": 4,
-        "restaurant_id": 5,
-        "products": [5],
-        "created_at": "2024-03-11 10:00:00"
-    }
+    "client_name":"João Silva",
+    "client_cellphone": "12345678970",
+    "client_address": "Rua Exemplo",
+    "client_address_number": 55,
+    "client_address_complement": "Casa",
+    "client_address_neighborhood": "Bairro Exemplo",
+    "client_zip_code": "12345678",
+    "restaurant_id": 1,
+    "products": [1]
+}
 
     response = client.post('/api/v1/orders/', json=order_data)
    
