@@ -17,7 +17,6 @@ def get_products_by_restaurant_id(restaurant_id):
         return {"error": f"Nenhum produto encontrado para restaurante com ID {restaurant_id}"}
 
     product_list = []
-    print(products)
     for product in products:
         product_list.append(product)
 
