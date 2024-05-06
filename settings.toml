@@ -13,7 +13,8 @@ FLASK_ENV = "development"
 INCLUDES = ["default"]
 TEMPLATES_AUTO_RELOAD = true
 DEBUG = true
-SQLALCHEMY_DATABASE_URI = 'sqlite:///db.development.dynaconf.sqlite'
+# docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_id (não consigo fazer ele pegar sozinho)
+SQLALCHEMY_DATABASE_URI = "mysql://myuser:mypassword@172.18.0.2:3306/mydatabase"
 
 [testing]
 FLASK_ENV = "testing"
