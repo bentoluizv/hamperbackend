@@ -46,10 +46,6 @@ Substitua `exemplo` pelo ambiente em que você deseja executar o projeto (por ex
 
 ## Configuração do Banco
 
- de
-
- Dados
-
 1. Execute o seguinte comando para iniciar o banco de dados fornecido pelo Docker:
 
 ```bash
