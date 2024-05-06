@@ -22,10 +22,17 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
+ 
+
 3. Instale as dependências necessárias utilizando o arquivo `requirements.txt`:
 
 ```bash
 pip install -r requirements.txt
+```
+
+#FIXME: error dependências necessárias para a instalação do pacote mysqlclient:
+```bash
+sudo apt-get install libmysqlclient-dev
 ```
 
 Após seguir esses passos, seu ambiente estará pronto para executar o projeto.
