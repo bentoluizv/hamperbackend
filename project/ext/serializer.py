@@ -38,6 +38,7 @@ class RestaurantSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Restaurant
         load_instance = True
+        include_relationships = True
 
 
 class UserSchema(ma.SQLAlchemyAutoSchema):
