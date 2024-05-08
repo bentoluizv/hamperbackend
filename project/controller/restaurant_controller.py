@@ -4,7 +4,7 @@ from project.ext.serializer import RestaurantSchema
 
 from project.service.restaurant_service import (delete_restaurant,
                                                 get_all_restaurants,
-                                                get_one_restaurant,
+                                                get_one_restaurant_with_products,
                                                 post_restaurant,
                                                 update_restaurant)
 
@@ -33,7 +33,7 @@ class RestaurantResourceID(Resource):
 
     def get(self, id):
         print("a")
-        if restaurant := get_one_restaurant(id):
+        if restaurant := get_one_restaurant_with_products(id):
             return restaurant  # type: ignore
         else:
             return {"error": f"Restaurante com ID {id} não encontrado."}, 404
