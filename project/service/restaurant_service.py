@@ -15,7 +15,11 @@ def post_restaurant(data_restaurant):
     db.session.commit()
 
 
-def get_one_restaurant(restaurant_id):
+def get_one_restaurant_by_id(restaurant_id):
+    return Restaurant.query.get(restaurant_id)
+
+
+def get_one_restaurant_with_products(restaurant_id):
     restaurant = Restaurant.query.get(restaurant_id)
     
     if restaurant:
@@ -47,7 +51,7 @@ def get_one_restaurant(restaurant_id):
 
 
 def update_restaurant(id, updated_data):
-    restaurant = get_one_restaurant(id)
+    restaurant = get_one_restaurant_by_id(id)
 
     if restaurant is None:
         return {"error": f"Restaurante com ID {id} não encontrado"}
@@ -65,7 +69,7 @@ def update_restaurant(id, updated_data):
 
 
 def delete_restaurant(id):
-    restaurant = get_one_restaurant(id)
+    restaurant = get_one_restaurant_by_id(id)
     
     if restaurant is None:
         return {"error": f"Restaurante com ID {id} não encontrado"}
