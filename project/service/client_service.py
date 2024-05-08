@@ -1,4 +1,5 @@
 from flask import request
+
 from ..ext.database import db
 from ..models.client_model import Client
 
