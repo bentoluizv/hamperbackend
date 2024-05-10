@@ -2,8 +2,9 @@ from flask import Blueprint
 from flask_restx import Api, fields
 
 from project.controller.user_controller import UserResource, UserResourceID
+from project.controller.utils_controller import UtilsResource
 from project.utils.namespace import (client_ns, order_ns, product_ns,
-                                     restaurant_ns, user_ns)
+                                     restaurant_ns, user_ns, utils_ns)
 
 from ...controller.client_controller import ClientResource, ClientResourceID
 from ...controller.order_controller import OrderResource, OrderResourceID
@@ -118,6 +119,7 @@ client_ns.add_resource(ClientResourceID, "/<int:id>")
 order_ns.add_resource(OrderResource, "/")
 order_ns.add_resource(OrderResourceID, "/<int:id>")
 
+utils_ns.add_resource(UtilsResource, "/")
 
 # Adicionar os namespaces ao API
 api.add_namespace(restaurant_ns)
@@ -125,6 +127,7 @@ api.add_namespace(user_ns)
 api.add_namespace(product_ns)
 api.add_namespace(client_ns)
 api.add_namespace(order_ns)
+api.add_namespace(utils_ns)
 
 
 def init_app(app):
@@ -134,3 +137,4 @@ def init_app(app):
     api.add_namespace(product_ns)
     api.add_namespace(client_ns)
     api.add_namespace(order_ns)
+    api.add_namespace(utils_ns)

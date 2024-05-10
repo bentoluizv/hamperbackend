@@ -4,11 +4,17 @@ restaurant_ns = Namespace(
     name="Restaurant", description="Gerenciar restaurante", path="/restaurants"
 )
 user_ns = Namespace(
-    name="User", description="Gerenciar usuário", path="/users")
+    name="User", description="Gerenciar usuário", path="/users"
+)
 product_ns = Namespace(
     name="Product", description="Gerenciar produto", path="/products"
 )
 client_ns = Namespace(
-    name="Client", description="Gerenciar cliente", path="/clients")
+    name="Client", description="Gerenciar cliente", path="/clients"
+)
 order_ns = Namespace(
-    name="Order", description="Gerenciar pedido", path="/orders")
+    name="Order", description="Gerenciar pedido", path="/orders"
+)
+utils_ns = Namespace(
+    name="Util", description="Métodos úteis", path="/utils"
+)
