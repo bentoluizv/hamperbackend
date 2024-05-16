@@ -3,12 +3,6 @@ from project.models.mock_data import mock_clients
 def test_list_client_return_200(app_testing):
     """
     Teste para verificar se o endpoint da API para listar clientes retorna o código de status 200.
-
-    Args:
-        app_testing: Uma instância do cliente de teste.
-
-    Returns:
-        None
     """
     client = app_testing.test_client()
     response = client.get('http://127.0.0.1:5000/api/v1/clients/')
@@ -115,6 +109,7 @@ def test_delete_client_return_404(app_testing):
     assert response.status_code == 404
     assert response.json['error'] == 'Cliente com ID 0 não encontrado'
     
+
 
 
 
