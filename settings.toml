@@ -14,6 +14,7 @@ INCLUDES = ["default"]
 TEMPLATES_AUTO_RELOAD = true
 DEBUG = true
 SQLALCHEMY_DATABASE_URI = "postgresql://myuser:mypassword1@localhost:5432/mydatabase"
+REDIS_URL = "rediss://localhost:6379"
 
 [testing]
 FLASK_ENV = "testing"
@@ -25,6 +26,7 @@ DEBUG = true
 FLASK_ENV = "production"
 INCLUDES = ["default"]
 SQLALCHEMY_DATABASE_URI = "postgresql://hamper:H9hx4jWB5SErLZ3jGkagsAcj6AZRpto0@dpg-cookos8l5elc738j9tjg-a.oregon-postgres.render.com/hamper"
+REDIS_URL = "rediss://red-cov6q97sc6pc73eor0i0:96aK6rAulEPQwRLGGsq0zkLvyqREIbfx@oregon-redis.render.com:6379"
 
 [homologacao]
 FLASK_ENV = "homologacao"
