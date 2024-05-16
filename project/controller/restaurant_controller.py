@@ -54,11 +54,14 @@ class RestaurantResourceID(Resource):
             result = update_restaurant(id, restaurant_data)
 
             if "error" in result:
-                abort(404, message=result["error"])
+                # FIXME: mesmo problema do product 
+                # abort(404, message=result["error"])
+                return {"error": result["error"]}, 404
             delete_redis_value("clients")
             return {"message": result["message"]}, 200
 
         except Exception as e:
+            # print(e) 
             return {"error": str(e)}, 500
 
 
