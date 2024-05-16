@@ -4,7 +4,7 @@ import pytest
 
 from project import create_app_wsgi
 from project.ext.database import db
-
+from sqlalchemy import Engine,event
 from project.models.user_model import User
 from project.models.restaurant_model import Restaurant
 from project.models.product_model import Product
@@ -25,6 +25,20 @@ def app_testing():
 
     with app.app_context():
         db.drop_all()
+
+# Define o pragma de chaves estrangeiras para conexões de banco de dados SQLite. (no momento deixarei desativado)
+# @event.listens_for(Engine, 'connect')
+# def set_sqlite_pragma(dbapi_connection, connection_record):
+#     """
+#     Define o pragma de chaves estrangeiras para conexões de banco de dados SQLite.
+
+#     Args:
+#         dbapi_connection: O objeto de conexão com o banco de dados.
+#         connection_record: O objeto de registro de conexão.
+#     """
+#     cursor = dbapi_connection.cursor()
+#     cursor.execute('PRAGMA foreign_keys=ON')
+#     cursor.close()
 
 
 def seeding_database():
