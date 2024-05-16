@@ -50,6 +50,7 @@ class ProductResourceID(Resource):
             result = update_product(id, product_data)
 
             if "error" in result:
+                # FIXME: A função abort não aceita um argumento nomeado message ela aceita um código de status e um corpo de resposta opcional talvez seja interessante mudar para: return {"error": result["error"]}, 404
                 abort(404, message=result["error"])
             delete_redis_value("clients")
             return {"message": result["message"]}, 200
