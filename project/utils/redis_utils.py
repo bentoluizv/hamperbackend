@@ -1,6 +1,9 @@
 import redis
+from dynaconf import settings
 
-redis_connection = redis.Redis(host='localhost', port=6379)
+REDIS_URL = settings["REDIS_URL"]
+
+redis_connection = redis.from_url(REDIS_URL)
 
 def set_redis_value(key, value):
     redis_connection.set(key, value)
