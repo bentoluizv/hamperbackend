@@ -36,6 +36,7 @@ typing_extensions==4.7.1
 Werkzeug==2.3.7
 pylint
 flask-marshmallow
+marshmallow-sqlalchemy
 twilio==9.0.1
 waitress
 mysqlclient
