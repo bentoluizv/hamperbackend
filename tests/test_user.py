@@ -57,7 +57,7 @@ def test_get_one_user_return_404(app_testing):
     assert response.status_code == 404
     assert response.json['error'] == 'Usuário com ID 1 não encontrado.'
 
-def test_patch_users_return_200(app_testing):
+def test_patch_users_return_200(app_testing, user):
     """
     Testa se a rota '/api/v1/clients/<int:id>/' retorna o código de status 200 ao fazer uma requisição PATCH com um ID de Usuario válido.
     """

@@ -137,7 +137,7 @@ def restaurant(app_testing):
     with app.app_context():
         restaurant = Restaurant(
             name='Bóde do Nô',
-            description='Descrrição do restaurante',
+            description='Descrição do restaurante',
             classification=4.9, 
             location='Recife-PE',
             url_image_logo='url_logo',

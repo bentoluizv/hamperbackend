@@ -53,6 +53,7 @@ class RestaurantResourceID(Resource):
             restaurant_data = request.json
             result = update_restaurant(id, restaurant_data)
 
+            
             if "error" in result:
                 # FIXME: mesmo problema do product 
                 # abort(404, message=result["error"])

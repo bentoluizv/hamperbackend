@@ -66,50 +66,44 @@ def test_get_one_restaurant_return_404(app_testing):
     assert response.status_code == 404
     assert response.json['error'] == 'Restaurante com ID 0 não encontrado.'
 
+# FIXME: O PROBLEMA DESSES TESTES DE PATCH ERA: restaurant = get_one_restaurant(id)
+def test_patch_restaurant_return_200(app_testing, restaurant):
+    """
+    Testa se a rota '/api/v1/restaurants/{restaurant.id}/products' retorna o código de status 200 ao fazer uma requisição PATCH com um ID de restaurante válido.
+    """
+    client = app_testing.test_client()
 
-# FIXME: por que esses testes não estão funcionando é um mystery
-# def test_patch_restaurant_return_200(app_testing, restaurant):
-#     """
-#     Testa se a rota '/api/v1/restaurants/<int:id>/' retorna o código de status 200 ao fazer uma requisição PATCH com um ID de restaurante válido.
-#     """
-#     client = app_testing.test_client()
+    restaurant_data = {
+        "name": "Restaurante Teste",
+        "description": "Descrição do restaurante de teste",
+        "classification": 4.5,
+        "location": "Cidade do Teste",
+        "url_image_logo": "url_logo_teste",
+        "url_image_banner": "url_banner_teste",
+        "products": [
+            {
+                "id": 1,
+                "name": "Produto Teste",
+                "value": 10.5,
+                "description": "Descrição do produto de teste",
+                "url_image": "url_produto_teste",
+                "restaurant_id": restaurant.id
+            }
+        ]
+    }
 
-#     restaurant_data = {
-#         "name": "Restaurante Teste",
-#         "description": "Descrição do restaurante de teste",
-#         "classification": 4.5,
-#         "location": "Cidade do Teste",
-#         "url_image_logo": "url_logo_teste",
-#         "url_image_banner": "url_banner_teste",
-#         # "products": [
-#         #     {
-#         #         "id": 1,
-#         #         "name": "Produto Teste",
-#         #         "value": 10.5,
-#         #         "description": "Descrição do produto de teste",
-#         #         "url_image": "url_produto_teste",
-#         #         "restaurant_id": 1
-#         #     }
-#         # ]
-#     }
+    response = client.patch(f'/api/v1/restaurants/{restaurant.id}/products', json=restaurant_data)
+    assert response.status_code == 200
+    assert response.json['message'] == f'Restaurante com ID {restaurant.id} atualizado com sucesso!'
 
-#     response = client.patch('/api/v1/restaurants/1/products', json=restaurant_data)
-#     assert response.status_code == 200
-#     print(response.json)
-#     assert response.json['message'] == 'Restaurante com ID 1 atualizado com sucesso!'
-
-# def test_patch_restaurant_return_500(app_testing):
-#     """
-#     Testa se a rota '/api/v1/restaurants/<int:id>/' retorna o código de status 500 ao fazer uma requisição PATCH com um ID de restaurante invalido.
-#     """
-#     client = app_testing.test_client()
-#     response = client.patch('/api/v1/restaurants/0/products', json={})
-#     print(response.json)
-#     assert response.status_code == 500
-
-
-
-
+def test_patch_restaurant_return_404(app_testing):
+    """
+    Testa se a rota '/api/v1/restaurants/<int:id>/' retorna o código de status 500 ao fazer uma requisição PATCH com um ID de restaurante invalido.
+    """
+    client = app_testing.test_client()
+    response = client.patch('/api/v1/restaurants/0/products', json={})
+    print(response.json)
+    assert response.status_code == 404
 
 
 # FIXME: O PROBLEMA DESSES TESTES DE DELETE ERA: restaurant = get_one_restaurant(id) 
