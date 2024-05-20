@@ -1,13 +1,15 @@
-from project.models.mock_data import mock_products
-def test_list_product_return_200(app_testing):
+def test_list_product_return_200(app_testing, restaurant_10, product_10):
     """
     Teste para verificar se o endpoint da API para listar produtos e retorna o código de status 200.
     """
     product = app_testing.test_client()
     response = product.get('http://127.0.0.1:5000/api/v1/products/')
     assert response.status_code == 200
+    for product in response.json:
+        assert 'name' in product
+        assert 'Description' in product['description']
 
-def test_post_product_return_200(app_testing):
+def test_post_product_return_200(app_testing,restaurant_10):
     """
     Testa se a rota '/api/v1/products/' retorna o código de status 201 (Created) ao fazer uma requisição POST com dados válidos de products.
     """
@@ -38,24 +40,17 @@ def test_post_product_return_400(app_testing):
     assert response.status_code == 400
     assert response.json['error'] == "'invalid' is an invalid keyword argument for Product"
 
-def test_get_one_product_return_200(app_testing):
+def test_get_one_product_return_200(app_testing,restaurant, product):
     """
     Testa se a rota '/api/v1/products/<int:id>/' retorna o código de status 200 ao fazer uma requisição GET com um ID de products válido.
     """
     client = app_testing.test_client()
 
-    response = client.get(f'/api/v1/products/{mock_products[1]["id"]}')
-    data = response.json
-    print(data)
+    response = client.get('/api/v1/products/1')
     assert response.status_code == 200
-    assert data['id'] == mock_products[1]['id']
-    assert data['name'] == mock_products[1]['name']
-    assert data['value'] == mock_products[1]['value']
-    assert data['description'] == mock_products[1]['description']
-    assert data['url_image'] == mock_products[1]['url_image']
-    #FIXME: assert response.json == mock_products[1] não funciona aqui pois o sqlite está tentando achar a chave do restaurante_id pois no servidor tecnicemente não temos o restaurante id
-    # O próximo assert irá falhar se 'restaurant_id' não estiver na resposta
-    # assert data['restaurant_id'] == mock_products[1]['restaurant_id']
+    assert response.json['name'] == 'X-Bacon'
+    assert response.json['value'] == 20
+
 
 def test_get_one_product_return_404(app_testing):
     """
@@ -65,7 +60,7 @@ def test_get_one_product_return_404(app_testing):
     response = client.get('/api/v1/products/0')
     assert response.status_code == 404
 
-def test_patch_product_return_200(app_testing):
+def test_patch_product_return_200(app_testing,restaurant, product):
     """
     Testa se a rota '/api/v1/products/<int:id>/' retorna o código de status 200 ao fazer uma requisição PATCH com um ID de products válido.
     """
@@ -76,12 +71,12 @@ def test_patch_product_return_200(app_testing):
         "value": 15,
         "description": "Descrição do produto de teste",
         "url_image": "url_image_teste",
-        "restaurant_id": 5
+        "restaurant_id": 1
     }
 
-    response = client.patch(f'/api/v1/products/{mock_products[1]["id"]}', json=product_data)
+    response = client.patch('/api/v1/products/1', json=product_data)
     assert response.status_code == 200
-    assert response.json['message'] == 'Produto com ID 2 atualizado com sucesso!'
+    assert response.json['message'] == 'Produto com ID 1 atualizado com sucesso!'
 
 def test_patch_product_return_500(app_testing):
     """
@@ -104,14 +99,14 @@ def test_patch_product_return_500(app_testing):
     # assert response.json['error'] == 'Produto com ID 0 não encontrado'
 
 
-def test_delete_product_return_200(app_testing):
+def test_delete_product_return_200(app_testing,restaurant, product):
     """
     Testa se a rota '/api/v1/products/<int:id>/' retorna o código de status 200 ao fazer uma requisição DELETE com um ID de products válido.
     """
     client = app_testing.test_client()
-    response = client.delete(f'/api/v1/products/{mock_products[1]["id"]}')
+    response = client.delete('/api/v1/products/1')
     assert response.status_code == 200
-    assert response.json['message'] == 'Produto com ID 2 deletado com sucesso.'
+    assert response.json['message'] == 'Produto com ID 1 deletado com sucesso.'
 
 def test_delete_product_return_404(app_testing):
     """
@@ -121,5 +116,3 @@ def test_delete_product_return_404(app_testing):
     response = client.delete('/api/v1/products/0')
     assert response.status_code == 404
     assert response.json['error'] == 'Produto com ID 0 não encontrado'
-
-

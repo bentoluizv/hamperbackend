@@ -65,7 +65,13 @@ def update_restaurant(id, updated_data):
 
 
 def delete_restaurant(id):
-    restaurant = get_one_restaurant(id)
+    # restaurant = get_one_restaurant(id)
+    # FIXME: A função get_one_restaurant(id) está retornando um dicionário que representa o restaurante,
+    # mas a função db.session.delete(restaurant) espera uma instância do objeto SQLAlchemy.
+    # Para corrigir isso, você precisa modificar a função delete_restaurant(id) para buscar o restaurante
+    # diretamente do banco de dados antes de tentar excluí-lo, em vez de usar a função get_one_restaurant(id).
+    restaurant = Restaurant.query.get(id)
+    
     
     if restaurant is None:
         return {"error": f"Restaurante com ID {id} não encontrado"}

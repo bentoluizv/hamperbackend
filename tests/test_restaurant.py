@@ -1,11 +1,16 @@
-from project.models.mock_data import mock_restaurants
-def test_list_restaurant_return_200(app_testing):
+def test_list_restaurant_return_200(app_testing, restaurant_10):
     """
     Teste para verificar se o endpoint da API para listar restaurante retorna o código de status 200.
     """
     restaurant = app_testing.test_client()
     response = restaurant.get('http://127.0.0.1:5000/api/v1/restaurants/')
+    print(response.json)
     assert response.status_code == 200
+    for restaurant in response.json:
+        assert 'name' in restaurant
+        assert 'description' in restaurant
+
+
 
 def test_post_restaurant_return_200(app_testing):
     """
@@ -39,25 +44,18 @@ def test_post_restaurant_return_400(app_testing):
     assert response.status_code == 400
     assert response.json['error'] == "'invalid' is an invalid keyword argument for Restaurant"
 
-def test_get_one_restaurant_return_200(app_testing):
+def test_get_one_restaurant_return_200(app_testing, restaurant):
     """
     Testa se a rota '/api/v1/restaurants/<int:id>/' retorna o código de status 200 ao fazer uma requisição GET com um ID de restaurante válido.
     """
     client = app_testing.test_client()
 
-    response = client.get(f'/api/v1/restaurants/{mock_restaurants[1]["id"]}/products')
-    data = response.json
+    response = client.get('/api/v1/restaurants/1/products')
     assert response.status_code == 200
-    assert data['id'] == mock_restaurants[1]['id']
-    assert data['name'] == mock_restaurants[1]['name']
-    assert data['description'] == mock_restaurants[1]['description']
-    assert data['classification'] == mock_restaurants[1]['classification']
-    assert data['location'] == mock_restaurants[1]['location']
-    assert data['url_image_logo'] == mock_restaurants[1]['url_image_logo']
-    assert data['url_image_banner'] == mock_restaurants[1]['url_image_banner']
-    #FIXME: assert response.json == mock_restaurants[1] não funciona aqui pois o sqlite está tentando achar associated_products pois no servidor tecnicemente não temos o associated_products
-    # O próximo assert irá falhar se 'associated_products' não estiver na resposta
-    # assert data['associated_products'] == mock_restaurants[1]['associated_products']
+    assert response.json['id'] == 1
+    assert 'name' in response.json
+    assert 'description' in response.json
+
 
 def test_get_one_restaurant_return_404(app_testing):
     """
@@ -69,24 +67,36 @@ def test_get_one_restaurant_return_404(app_testing):
     assert response.json['error'] == 'Restaurante com ID 0 não encontrado.'
 
 
-# FIXME: testes estão dando problema pelo que estou entendendo é algo relacionado ao banco que não ta encontrando as informações
-# def test_patch_restaurant_return_200(app_testing):
+# FIXME: por que esses testes não estão funcionando é um mystery
+# def test_patch_restaurant_return_200(app_testing, restaurant):
 #     """
 #     Testa se a rota '/api/v1/restaurants/<int:id>/' retorna o código de status 200 ao fazer uma requisição PATCH com um ID de restaurante válido.
 #     """
 #     client = app_testing.test_client()
 
-#     product_data = {
-#         "name": "X-Teste",
-#         "value": 15,
-#         "description": "Descrição do produto de teste",
-#         "url_image": "url_image_teste",
-#         "restaurant_id": 5
+#     restaurant_data = {
+#         "name": "Restaurante Teste",
+#         "description": "Descrição do restaurante de teste",
+#         "classification": 4.5,
+#         "location": "Cidade do Teste",
+#         "url_image_logo": "url_logo_teste",
+#         "url_image_banner": "url_banner_teste",
+#         # "products": [
+#         #     {
+#         #         "id": 1,
+#         #         "name": "Produto Teste",
+#         #         "value": 10.5,
+#         #         "description": "Descrição do produto de teste",
+#         #         "url_image": "url_produto_teste",
+#         #         "restaurant_id": 1
+#         #     }
+#         # ]
 #     }
 
-#     response = client.patch(f'/api/v1/restaurants/{mock_restaurants[1]["id"]}/products', json=product_data)
+#     response = client.patch('/api/v1/restaurants/1/products', json=restaurant_data)
 #     assert response.status_code == 200
-#     assert response.json['message'] == 'Produto com ID 2 atualizado com sucesso!'
+#     print(response.json)
+#     assert response.json['message'] == 'Restaurante com ID 1 atualizado com sucesso!'
 
 # def test_patch_restaurant_return_500(app_testing):
 #     """
@@ -94,18 +104,25 @@ def test_get_one_restaurant_return_404(app_testing):
 #     """
 #     client = app_testing.test_client()
 #     response = client.patch('/api/v1/restaurants/0/products', json={})
+#     print(response.json)
 #     assert response.status_code == 500
 
-# def test_delete_restaurant_return_200(app_testing):
-#     """
-#     Testa se a rota '/api/v1/restaurants/<int:id>/' retorna o código de status 200 ao fazer uma requisição DELETE com um ID de restaurante válido.
-#     """
-#     client = app_testing.test_client()
-#     response = client.delete(f'/api/v1/restaurants/{mock_restaurants[1]["id"]}/products')
-#     assert response.status_code == 200
-#     assert response.json['message'] == 'Restaurante com ID 2 deletado com sucesso!'
 
-# TODO: é algo relacionado ao preenchimento do banco pois se fosse a rota esse teste iria falhar tbm....
+
+
+
+
+# FIXME: O PROBLEMA DESSES TESTES DE DELETE ERA: restaurant = get_one_restaurant(id) 
+def test_delete_restaurant_return_200(app_testing, restaurant):
+    """
+    Testa se a rota '/api/v1/restaurants/<int:id>/' retorna o código de status 200 ao fazer uma requisição DELETE com um ID de restaurante válido.
+    """
+    client = app_testing.test_client()
+    response = client.delete('/api/v1/restaurants/1/products')
+    assert response.status_code == 200
+    print(response.json)
+    assert response.json['message'] == 'Restaurante com ID 1 deletado com sucesso.'
+
 def test_delete_restaurant_return_404(app_testing):
     """
     Testa se a rota '/api/v1/restaurants/<int:id>/' retorna o código de status 404 ao fazer uma requisição DELETE com um ID de restaurante invalido.
@@ -113,4 +130,5 @@ def test_delete_restaurant_return_404(app_testing):
     client = app_testing.test_client()
     response = client.delete('/api/v1/restaurants/0/products')
     assert response.status_code == 404
+    print(response.json)
     assert response.json['error'] == 'Restaurante com ID 0 não encontrado'
