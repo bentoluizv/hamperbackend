@@ -40,3 +40,4 @@ marshmallow-sqlalchemy==1.0.0
 twilio
 redis
 coverage
+factory_boy
