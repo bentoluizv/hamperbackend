@@ -41,12 +41,12 @@ def post_order(order_data):
 def get_one_order(order_id):
     return order if (order := Order.query.get(order_id)) else None
 
-#FIXME: o problema está na forma como você está usando a função abort(). A função abort() do Flask levanta uma exceção HTTP que pode ser capturada e tratada por um manipulador de erros. No entanto, parece que você está tentando passar um argumento de palavra-chave 'error' para abort(), que não é suportado.
 def update_order(id, updated_data):
     order = get_one_order(id)
 
     if order is None:
-        abort(404, error=f"Ordem com ID {id} não encontrado")
+        return {"error": f"Ordem com ID {id} não encontrado."}
+        # abort(404, error=f"Ordem com ID {id} não encontrado")
 
     try:
         for key, value in updated_data.items():
@@ -59,7 +59,9 @@ def update_order(id, updated_data):
 
     except Exception as e:
         db.session.rollback()
-        abort(500, error=str(e))
+        return {"error": str(e)}
+        #FIXME: o problema está na forma está usando a função abort(). A função abort() do Flask levanta uma exceção HTTP que pode ser capturada e tratada por um manipulador de erros. No entanto, esta sendo passado um argumento de palavra-chave 'error' para abort(), que não é suportado.
+        # abort(500, error=str(e))
 
 
 def delete_one_order(id):

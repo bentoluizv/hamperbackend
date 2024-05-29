@@ -36,7 +36,6 @@ def test_post_order_return_400(app_testing, restaurant_10, product_10):
     response = client.post('/api/v1/orders/', json=order_data)
 
     assert response.status_code == 400
-    #TODO: verificar como ele ta pegando as informações da rota legal...
     assert response.json['error'] == "404 Not Found: Cliente com ID 4 não encontrado."
 
 def test_get_one_order_return_200(app_testing,cliente, restaurant, product, order):
@@ -60,28 +59,23 @@ def test_patch_order_return_200(app_testing, cliente, restaurant, product, order
         "client_id": 1,
         "restaurant_id": 1,
         "products": [1],
-        "created_at": "2024-03-11 10:00:00"
     }
 
     response = client.patch('/api/v1/orders/1', json=order_data)
-    breakpoint()
-    print(response.data)
     assert response.status_code == 200
-    assert response.json['message'] == 'Pedido atualizado com sucesso!'
+    assert response.json['message'] == 'Ordem com ID 1 atualizado com sucesso!'
 
-# def test_patch_order_return_404(app_testing):
-#     client = app_testing.test_client()
+def test_patch_order_return_404(app_testing):
+    client = app_testing.test_client()
 
-#     order_data = {
-#         "client_id": 1,
-#         "restaurant_id": 1,
-#         "products": [1],
-#         "created_at": "2024-03-11 10:00:00"
-#     }
-
-#     response = client.patch('/api/v1/orders/0', json=order_data)
-#     assert response.status_code == 404
-#     assert response.json['error'] == "Ordem com ID 0 não encontrado."
+    order_data = {
+        "client_id": 1,
+        "restaurant_id": 1,
+        "products": [1],
+    }
+    response = client.patch('/api/v1/orders/0', json=order_data)
+    assert response.status_code == 404
+    assert response.json['error'] == "Ordem com ID 0 não encontrado."
 
 def test_delete_order_return_200(app_testing, cliente, restaurant, product, order):
     client = app_testing.test_client()
