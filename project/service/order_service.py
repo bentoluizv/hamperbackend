@@ -41,7 +41,7 @@ def post_order(order_data):
 def get_one_order(order_id):
     return order if (order := Order.query.get(order_id)) else None
 
-
+#FIXME: o problema está na forma como você está usando a função abort(). A função abort() do Flask levanta uma exceção HTTP que pode ser capturada e tratada por um manipulador de erros. No entanto, parece que você está tentando passar um argumento de palavra-chave 'error' para abort(), que não é suportado.
 def update_order(id, updated_data):
     order = get_one_order(id)
 

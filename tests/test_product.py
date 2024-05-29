@@ -78,7 +78,7 @@ def test_patch_product_return_200(app_testing,restaurant, product):
     assert response.status_code == 200
     assert response.json['message'] == 'Produto com ID 1 atualizado com sucesso!'
 
-def test_patch_product_return_500(app_testing):
+def test_patch_product_return_404(app_testing):
     """
     Testa se a rota '/api/v1/products/<int:id>/' retorna o código de status 404 ao fazer uma requisição PATCH com um ID de products invalido.
     """
@@ -93,10 +93,8 @@ def test_patch_product_return_500(app_testing):
     }
 
     response = client.patch('/api/v1/products/0', json=product_data)
-    assert response.status_code == 500
-    assert 'error' in response.json
-    # FIXME: problema no product_controller
-    # assert response.json['error'] == 'Produto com ID 0 não encontrado'
+    assert response.status_code == 404
+    assert response.json['error'] == 'Produto com ID 0 não encontrado'
 
 
 def test_delete_product_return_200(app_testing,restaurant, product):

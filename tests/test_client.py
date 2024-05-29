@@ -87,15 +87,14 @@ def test_patch_client_return_200(app_testing, cliente):
     assert response.status_code == 200
     assert response.json['message'] == 'Cliente com ID 1 atualizado com sucesso!'
 
-def test_patch_client_return_500(app_testing):
+def test_patch_client_return_404(app_testing):
     """
     Testa se a rota '/api/v1/clients/<int:id>/' retorna o código de status 500 ao fazer uma requisição PATCH com um ID de cliente invalido.
     """
     client = app_testing.test_client()
     response = client.patch('/api/v1/clients/0', json={})
-    #FIXME: Não deveria ser 404??
-    assert response.status_code == 500
-    #FIXME: Não deveriamos ter um exception 'Cliente com ID 0 não encontrado'
+    assert response.status_code == 404
+    assert response.json['error'] == 'Cliente com ID 0 não encontrado'
 
 def test_delete_client_return_200(app_testing, cliente):
     """
