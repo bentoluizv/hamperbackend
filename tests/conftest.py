@@ -4,7 +4,7 @@ import pytest
 
 from project import create_app_wsgi
 from project.ext.database import db
-from sqlalchemy import Engine,event
+from sqlalchemy import Engine, event
 from project.models.user_model import User
 from project.models.restaurant_model import Restaurant
 from project.models.product_model import Product
@@ -18,7 +18,7 @@ from tests.factory.user_factory import UserFactory
 
 
 # TODO: Define o pragma de chaves estrangeiras para conexões de banco de dados SQLite.
-@event.listens_for(Engine, 'connect')
+@event.listens_for(Engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
     """
     Define o pragma de chaves estrangeiras para conexões de banco de dados SQLite.
@@ -28,8 +28,9 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
         connection_record: O objeto de registro de conexão.
     """
     cursor = dbapi_connection.cursor()
-    cursor.execute('PRAGMA foreign_keys=ON')
+    cursor.execute("PRAGMA foreign_keys=ON")
     cursor.close()
+
 
 @pytest.fixture
 def app_testing():
@@ -45,13 +46,14 @@ def app_testing():
     Returns:
         app: Instância da aplicação configurada para teste.
     """
-    os.environ['FLASK_ENV'] = 'testing'
+    os.environ["FLASK_ENV"] = "testing"
     app = create_app_wsgi()
     with app.app_context():
         db.create_all()
     yield app
     with app.app_context():
         db.drop_all()
+
 
 @pytest.fixture
 def user(app_testing):
@@ -66,16 +68,13 @@ def user(app_testing):
     """
     app = app_testing
     with app.app_context():
-        user = User(
-            firstname = 'Tony',
-            lastname = 'Stark',
-            email = 'ironman@icloud.com'
-        )
+        user = User(firstname="Tony", lastname="Stark", email="ironman@icloud.com")
         db.session.add(user)
         db.session.commit()
         db.session.refresh(user)
 
     return user
+
 
 @pytest.fixture
 def User_10(app_testing):
@@ -93,6 +92,7 @@ def User_10(app_testing):
 
     return users
 
+
 @pytest.fixture
 def cliente(app_testing):
     """
@@ -104,20 +104,20 @@ def cliente(app_testing):
     app = app_testing
     with app.app_context():
         cliente = Client(
-            client_name ='John Doe',
-            client_cellphone ='69999999999',
-            client_address ='1600 Amphitheatre Parkway',
-            client_address_number ='1600',
-            client_address_complement ='',
-            client_address_neighborhood ='Mountain View',
-            client_zip_code ='94043'
-
+            client_name="John Doe",
+            client_cellphone="69999999999",
+            client_address="1600 Amphitheatre Parkway",
+            client_address_number="1600",
+            client_address_complement="",
+            client_address_neighborhood="Mountain View",
+            client_zip_code="94043",
         )
         db.session.add(cliente)
         db.session.commit()
         db.session.refresh(cliente)
 
     return cliente
+
 
 @pytest.fixture
 def client_10(app_testing):
@@ -135,6 +135,7 @@ def client_10(app_testing):
 
     return clients
 
+
 @pytest.fixture
 def restaurant(app_testing):
     """
@@ -146,12 +147,12 @@ def restaurant(app_testing):
     app = app_testing
     with app.app_context():
         restaurant = Restaurant(
-            name='Bóde do Nô',
-            description='Descrição do restaurante',
-            classification=4.9, 
-            location='Recife-PE',
-            url_image_logo='url_logo',
-            url_image_banner='url_banner',
+            name="Bóde do Nô",
+            description="Descrição do restaurante",
+            classification=4.9,
+            location="Recife-PE",
+            url_image_logo="url_logo",
+            url_image_banner="url_banner",
         )
         # product = Product(
         #     name='Produto Exemplo',
@@ -167,6 +168,7 @@ def restaurant(app_testing):
         # db.session.refresh(product)
 
     return restaurant
+
 
 @pytest.fixture
 def restaurant_10(app_testing):
@@ -184,8 +186,9 @@ def restaurant_10(app_testing):
 
     return restaurants
 
+
 @pytest.fixture
-#TODO: Essa fixture precisa ser usada em conjunto com a fixtures (restaurant)
+# TODO: Essa fixture precisa ser usada em conjunto com a fixtures (restaurant)
 def product(app_testing):
     """
     Cria uma ingessão de produtos para os testes.
@@ -196,17 +199,18 @@ def product(app_testing):
     app = app_testing
     with app.app_context():
         product = Product(
-        name = 'X-Bacon',
-        value = 20,
-        description = 'Bacon',
-        url_image = 'url_image',
-        restaurant_id = 1
+            name="X-Bacon",
+            value=20,
+            description="Bacon",
+            url_image="url_image",
+            restaurant_id=1,
         )
         db.session.add(product)
         db.session.commit()
         db.session.refresh(product)
 
     return product
+
 
 @pytest.fixture
 def product_10(app_testing):
@@ -224,8 +228,9 @@ def product_10(app_testing):
 
     return products
 
+
 @pytest.fixture
-#TODO: essa fixture precisa ser usada em conjunto com as fixtures (cliente, restaurant, product)
+# TODO: essa fixture precisa ser usada em conjunto com as fixtures (cliente, restaurant, product)
 def order(app_testing):
     """
     Cria uma ingessão de ordem de pedido para os testes.
@@ -236,16 +241,13 @@ def order(app_testing):
     app = app_testing
     with app.app_context():
         product = db.session.query(Product).get(1)
-        order = Order(
-            client_id = 1,
-            restaurant_id = 1,
-            products = [product]
-        )
+        order = Order(client_id=1, restaurant_id=1, products=[product])
         db.session.add(order)
         db.session.commit()
         db.session.refresh(order)
 
     return order
+
 
 @pytest.fixture
 def order_10(app_testing):

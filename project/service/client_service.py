@@ -24,14 +24,14 @@ def update_client(id, updated_data):
 
     if client is None:
         return {"error": f"Cliente com ID {id} não encontrado"}
-    
+
     try:
         for key, value in updated_data.items():
             setattr(client, key, value)
 
         db.session.commit()
         return {"message": f"Cliente com ID {id} atualizado com sucesso!"}
-    
+
     except Exception as e:
         db.session.rollback()
         return {"error": str(e)}

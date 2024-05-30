@@ -44,3 +44,7 @@ test-coverage:
 
 pylint:
 	pylint project
+
+ruffs:
+	ruff check
+	ruff format
