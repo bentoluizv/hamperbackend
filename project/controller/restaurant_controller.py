@@ -55,8 +55,6 @@ class RestaurantResourceID(Resource):
 
             
             if "error" in result:
-                # FIXME: A função abort não aceita um argumento nomeado message ela aceita um código de status e um corpo de resposta opcional
-                # abort(404, message=result["error"])
                 return {"error": result["error"]}, 404
             delete_redis_value("clients")
             return {"message": result["message"]}, 200

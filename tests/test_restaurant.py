@@ -66,7 +66,6 @@ def test_get_one_restaurant_return_404(app_testing):
     assert response.status_code == 404
     assert response.json['error'] == 'Restaurante com ID 0 não encontrado.'
 
-# FIXME: O PROBLEMA DESSES TESTES DE PATCH ERA: restaurant = get_one_restaurant(id)
 def test_patch_restaurant_return_200(app_testing, restaurant):
     """
     Testa se a rota '/api/v1/restaurants/{restaurant.id}/products' retorna o código de status 200 ao fazer uma requisição PATCH com um ID de restaurante válido.
@@ -106,7 +105,6 @@ def test_patch_restaurant_return_404(app_testing):
     assert response.status_code == 404
 
 
-# FIXME: O PROBLEMA DESSES TESTES DE DELETE ERA: restaurant = get_one_restaurant(id) 
 def test_delete_restaurant_return_200(app_testing, restaurant):
     """
     Testa se a rota '/api/v1/restaurants/<int:id>/' retorna o código de status 200 ao fazer uma requisição DELETE com um ID de restaurante válido.

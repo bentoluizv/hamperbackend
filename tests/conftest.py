@@ -17,7 +17,7 @@ from tests.factory.restaurant_factory import RestaurantFactory
 from tests.factory.user_factory import UserFactory
 
 
-# TODO: Define o pragma de chaves estrangeiras para conexões de banco de dados SQLite. (no momento deixarei desativado)
+# TODO: Define o pragma de chaves estrangeiras para conexões de banco de dados SQLite.
 @event.listens_for(Engine, 'connect')
 def set_sqlite_pragma(dbapi_connection, connection_record):
     """
@@ -33,9 +33,20 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 
 @pytest.fixture
 def app_testing():
+    """
+    Configura o ambiente de teste para a aplicação.
+
+    Define a variável de ambiente 'FLASK_ENV' como 'testing'.
+    Cria uma instância da aplicação usando a função 'create_app_wsgi()'.
+    Cria o banco de dados usando o contexto da aplicação.
+    Retorna a instância da aplicação.
+    Ao finalizar o teste, remove o banco de dados.
+
+    Returns:
+        app: Instância da aplicação configurada para teste.
+    """
     os.environ['FLASK_ENV'] = 'testing'
     app = create_app_wsgi()
-    # print(f"Database URI em app_testing: {app.config['SQLALCHEMY_DATABASE_URI']}")
     with app.app_context():
         db.create_all()
     yield app
@@ -54,7 +65,6 @@ def user(app_testing):
         User: Uma instância de User do sistema.
     """
     app = app_testing
-    # print(f"Database URI em user: {app.config['SQLALCHEMY_DATABASE_URI']}")
     with app.app_context():
         user = User(
             firstname = 'Tony',
@@ -175,7 +185,7 @@ def restaurant_10(app_testing):
     return restaurants
 
 @pytest.fixture
-# essa fixture precisa ser usada em conjunto com a fixtures (restaurant)
+#TODO: Essa fixture precisa ser usada em conjunto com a fixtures (restaurant)
 def product(app_testing):
     """
     Cria uma ingessão de produtos para os testes.
@@ -215,7 +225,7 @@ def product_10(app_testing):
     return products
 
 @pytest.fixture
-# essa fixture precisa ser usada em conjunto com as fixtures (cliente, restaurant, product) [NESSA ORDEM ja que as fixtures são executadas em ordem]
+#TODO: essa fixture precisa ser usada em conjunto com as fixtures (cliente, restaurant, product)
 def order(app_testing):
     """
     Cria uma ingessão de ordem de pedido para os testes.

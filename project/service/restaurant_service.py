@@ -55,10 +55,6 @@ def update_restaurant(id, updated_data):
     try:
         for key, value in updated_data.items():
             restaurant[key] = value
-            #FIXME: O código abaixo está assumindo que 'restaurant' é um dicionário, mas é uma instância de uma classe.
-            # Precisamos usar setattr() para definir atributos em uma instância de classe, mas isso está causando um erro "'dict' object has no attribute 'classification'".
-            # Precisamos encontrar uma maneira de atualizar os atributos da instância de classe sem causar esse erro. 
-            # setattr(restaurant, key, value)
 
         db.session.commit()
         return {"message": f"Restaurante com ID {id} atualizado com sucesso!"}
@@ -69,11 +65,6 @@ def update_restaurant(id, updated_data):
 
 
 def delete_restaurant(id):
-    # restaurant = get_one_restaurant(id)
-    # FIXME: A função get_one_restaurant(id) está retornando um dicionário que representa o restaurante,
-    # mas a função db.session.delete(restaurant) espera uma instância do objeto SQLAlchemy.
-    # Para corrigir isso, você precisa modificar a função delete_restaurant(id) para buscar o restaurante
-    # diretamente do banco de dados antes de tentar excluí-lo, em vez de usar a função get_one_restaurant(id).
     restaurant = Restaurant.query.get(id)
     
     
