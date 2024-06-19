@@ -17,7 +17,7 @@ def post_restaurant(data_restaurant):
 
 def get_one_restaurant(restaurant_id):
     restaurant = Restaurant.query.get(restaurant_id)
-    
+
     if restaurant:
         restaurant_data = {
             "id": restaurant.id,
@@ -27,7 +27,7 @@ def get_one_restaurant(restaurant_id):
             "location": restaurant.location,
             "url_image_logo": restaurant.url_image_logo,
             "url_image_banner": restaurant.url_image_banner,
-            "associated_products": []
+            "associated_products": [],
         }
 
         for product in restaurant.products:
@@ -37,7 +37,7 @@ def get_one_restaurant(restaurant_id):
                 "value": product.value,
                 "description": product.description,
                 "url_image": product.url_image,
-                "restaurant_id": product.restaurant_id
+                "restaurant_id": product.restaurant_id,
             }
             restaurant_data["associated_products"].append(product_data)
 
@@ -54,7 +54,7 @@ def update_restaurant(id, updated_data):
 
     try:
         for key, value in updated_data.items():
-            setattr(restaurant, key, value)
+            restaurant[key] = value
 
         db.session.commit()
         return {"message": f"Restaurante com ID {id} atualizado com sucesso!"}
@@ -65,8 +65,8 @@ def update_restaurant(id, updated_data):
 
 
 def delete_restaurant(id):
-    restaurant = get_one_restaurant(id)
-    
+    restaurant = Restaurant.query.get(id)
+
     if restaurant is None:
         return {"error": f"Restaurante com ID {id} não encontrado"}
 

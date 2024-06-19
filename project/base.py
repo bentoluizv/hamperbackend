@@ -14,12 +14,9 @@ def create_app(**config):
 
     """
     app = Flask(__name__)
-    FlaskDynaconf(app, envvar_prefix="FLASK", settings_files=[
-                  "settings.toml"])
+    FlaskDynaconf(app, envvar_prefix="FLASK", settings_files=["settings.toml"])
     # pylint: disable=E1101
-    app.config.load_extensions(
-        "EXTENSIONS"
-    )
+    app.config.load_extensions("EXTENSIONS")
     app.config.update(config)
     CORS(app)
 

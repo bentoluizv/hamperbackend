@@ -14,21 +14,24 @@ def get_all_orders():
 
 
 def post_order(order_data):
-    if not Client.query.get(order_data['client_id']):
+    if not Client.query.get(order_data["client_id"]):
         abort(404, f"Cliente com ID {order_data['client_id']} não encontrado.")
 
-    if not Restaurant.query.get(order_data['restaurant_id']):
+    if not Restaurant.query.get(order_data["restaurant_id"]):
         abort(404, f"Restaurante com ID {order_data['restaurant_id']} não encontrado.")
 
-    if not all(Product.query.get(product_id) for product_id in order_data['products']):
+    if not all(Product.query.get(product_id) for product_id in order_data["products"]):
         abort(404, "Um ou mais produtos não foram encontrados.")
 
-    products = [Product.query.get(product_id) for product_id in order_data['products']]
+    products = [Product.query.get(product_id) for product_id in order_data["products"]]
 
     products_value = [product.value for product in products]
 
     new_order = Order(
-        client_id=order_data['client_id'], restaurant_id=order_data['restaurant_id'], products=products, total_value=sum(products_value)
+        client_id=order_data["client_id"],
+        restaurant_id=order_data["restaurant_id"],
+        products=products,
+        total_value=sum(products_value),
     )
     db.session.add(new_order)
     db.session.commit()
@@ -46,7 +49,7 @@ def update_order(id, updated_data):
     order = get_one_order(id)
 
     if order is None:
-        abort(404, error=f"Ordem com ID {id} não encontrado")
+        return {"error": f"Ordem com ID {id} não encontrado."}
 
     try:
         for key, value in updated_data.items():
@@ -59,7 +62,7 @@ def update_order(id, updated_data):
 
     except Exception as e:
         db.session.rollback()
-        abort(500, error=str(e))
+        return {"error": str(e)}
 
 
 def delete_one_order(id):
@@ -76,6 +79,7 @@ def delete_one_order(id):
     except Exception as e:
         db.session.rollback()
         return {"error": str(e)}
-    
+
+
 def total_order_value(order_data):
     order_data

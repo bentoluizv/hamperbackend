@@ -38,7 +38,7 @@ def update_user(user_id, updated_data):
 
 def delete_user(id):
     user = get_one_user(id)
-    
+
     if user is None:
         return {"error": f"Usuário com ID {id} não encontrado"}
 

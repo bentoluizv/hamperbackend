@@ -37,5 +37,14 @@ env-testing:
 	export FLASK_ENV=testing
 	python main.py
 
+test-coverage:
+	coverage run -m pytest
+	coverage report
+	coverage html
+
 pylint:
 	pylint project
+
+ruffs:
+	ruff check
+	ruff format
