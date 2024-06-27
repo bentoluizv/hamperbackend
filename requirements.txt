@@ -40,3 +40,4 @@ twilio==9.0.1
 waitress
 mysqlclient
 redis
+pytest-redis==
