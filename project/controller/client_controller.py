@@ -21,7 +21,7 @@ class ClientResource(Resource):
             return clients
         clients = get_all_clients()
         clients = client_schema_list.dump(clients)
-        # set_redis_value(key_redis, json.dumps(clients))
+        set_redis_value(key_redis, json.dumps(clients))
         return clients, 200
 
 
