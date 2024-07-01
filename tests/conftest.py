@@ -1,6 +1,7 @@
-from datetime import datetime
 import os
+from unittest.mock import patch
 
+import fakeredis
 import pytest
 
 from project import create_app_wsgi
@@ -26,6 +27,11 @@ def app_testing():
 
     with app.app_context():
         db.drop_all()
+
+
+@pytest.fixture
+def fake_redis():
+    return fakeredis.FakeStrictRedis()
 
 
 def seeding_database():

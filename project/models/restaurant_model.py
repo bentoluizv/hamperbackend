@@ -3,7 +3,7 @@ from ..ext.database import db
 
 class Restaurant(db.Model):
     id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name: str = db.Column(db.String(20), unique=True, nullable=False)
+    name: str = db.Column(db.String(40), unique=True, nullable=False)
     description: str = db.Column(db.String(120), nullable=False)
     classification: float = db.Column(db.Float(precision=3), nullable=False)
     location: str = db.Column(db.String(120), nullable=False)
