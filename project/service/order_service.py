@@ -13,20 +13,18 @@ def get_all_orders():
     return Order.query.all()
 
 
-def save_client(order_data):
+def save_client(order_data: dict):
     new_client = Client(
         client_name=order_data['client_name'], client_cellphone=order_data['client_cellphone'],
         client_address=order_data['client_address'], client_address_number=order_data['client_address_number'],
         client_address_complement=order_data['client_address_complement'], client_address_neighborhood=order_data['client_address_neighborhood'],
         client_zip_code=order_data['client_zip_code']
     )
-    print(new_client.client_cellphone)
-    print(type(new_client.client_cellphone))
     db.session.add(new_client)
     db.session.commit()
 
 
-def post_order(order_data):
+def post_order(order_data: dict):
     if not Restaurant.query.get(order_data['restaurant_id']):
         abort(404, f"Restaurante com ID {order_data['restaurant_id']} não encontrado.")
 
@@ -46,7 +44,6 @@ def post_order(order_data):
     new_order = Order(
         client_id=client.id, restaurant_id=order_data['restaurant_id'], products=products, total_value=sum(products_value)
     )
-    
     db.session.add(new_order)
     db.session.commit()
 
@@ -55,11 +52,11 @@ def post_order(order_data):
     return {"message": "Pedido cadastrado com sucesso!"}, 201
 
 
-def get_one_order(order_id):
+def get_one_order(order_id: int):
     return order if (order := Order.query.get(order_id)) else None
 
 
-def update_order(id, updated_data):
+def update_order(id: int, updated_data: dict):
     order = get_one_order(id)
 
     if order is None:
@@ -79,7 +76,7 @@ def update_order(id, updated_data):
         abort(500, error=str(e))
 
 
-def delete_one_order(id):
+def delete_one_order(id: int):
     order = get_one_order(id)
 
     if order is None:
@@ -94,5 +91,5 @@ def delete_one_order(id):
         db.session.rollback()
         return {"error": str(e)}
     
-def total_order_value(order_data):
+def total_order_value(order_data: dict):
     order_data

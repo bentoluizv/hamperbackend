@@ -40,15 +40,14 @@ class RestaurantResource(Resource):
 
 class RestaurantResourceID(Resource):
 
-    def get(self, id):
-        print("a")
+    def get(self, id: int):
         if restaurant := get_one_restaurant_with_products(id):
             return restaurant  # type: ignore
         else:
             return {"error": f"Restaurante com ID {id} não encontrado."}, 404
         
         
-    def patch(self, id):
+    def patch(self, id: int):
         try:
             restaurant_data = request.json
             result = update_restaurant(id, restaurant_data)
@@ -62,7 +61,7 @@ class RestaurantResourceID(Resource):
             return {"error": str(e)}, 500
 
 
-    def delete(self, id):
+    def delete(self, id: int):
         try:
             result = delete_restaurant(id)
 

@@ -8,18 +8,18 @@ def get_all_restaurants():
     return Restaurant.query.all()
 
 
-def post_restaurant(data_restaurant):
+def post_restaurant(data_restaurant: dict):
     data_restaurant = request.get_json()
     restaurant = Restaurant(**data_restaurant)
     db.session.add(restaurant)
     db.session.commit()
 
 
-def get_one_restaurant_by_id(restaurant_id):
+def get_one_restaurant_by_id(restaurant_id: int):
     return Restaurant.query.get(restaurant_id)
 
 
-def get_one_restaurant_with_products(restaurant_id):
+def get_one_restaurant_with_products(restaurant_id: int):
     restaurant = Restaurant.query.get(restaurant_id)
     
     if restaurant:
@@ -50,7 +50,7 @@ def get_one_restaurant_with_products(restaurant_id):
         return None
 
 
-def update_restaurant(id, updated_data):
+def update_restaurant(id: int, updated_data: dict):
     restaurant = get_one_restaurant_by_id(id)
 
     if restaurant is None:
@@ -68,7 +68,7 @@ def update_restaurant(id, updated_data):
         return {"error": str(e)}
 
 
-def delete_restaurant(id):
+def delete_restaurant(id: int):
     restaurant = get_one_restaurant_by_id(id)
     
     if restaurant is None:

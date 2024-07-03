@@ -1,9 +1,10 @@
 from twilio.rest import Client as ClientTwilio
 from project.models.client_model import Client
 from project.models.restaurant_model import Restaurant
+from project.models.order_model import Order
 
 
-def send_whatsapp_message(new_order):
+def send_whatsapp_message(new_order: Order):
   restaurant_query = Restaurant.query.filter(Restaurant.id == new_order.restaurant_id)
   client_query = Client.query.filter(Client.id == new_order.client_id)
 
@@ -30,9 +31,11 @@ def send_whatsapp_message(new_order):
           f"\n💸 Valor Total: R${new_order.total_value} \n"
           f"📅 Data do Pedido: {formatted_time}")
 
+  print(type(new_order))
+
   try:
     account_sid = 'AC07bda34115f9e874de261be356af10d4'
-    auth_token = '051223feaed4bf531f4071e9cca86a2b'
+    auth_token = '407f7da9400af448f3b9d7f70196c850'
     client = ClientTwilio(account_sid, auth_token)
 
     message = client.messages.create(
