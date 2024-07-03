@@ -37,14 +37,14 @@ class ProductResource(Resource):
 
 class ProductResourceID(Resource):
 
-    def get(self, id):
+    def get(self, id: int):
         if product := get_one_product(id):
             return product_schema.dump(product), 200  # type: ignore
         else:
             return {"error": f"Produto com ID {id} não encontrado."}, 404
         
         
-    def patch(self, id):
+    def patch(self, id: int):
         try:
             product_data = request.json
             result = update_product(id, product_data)
@@ -58,7 +58,7 @@ class ProductResourceID(Resource):
             return {"error": str(e)}, 500
 
 
-    def delete(self, id):
+    def delete(self, id: int):
         try:
             result = delete_product(id)
 

@@ -37,14 +37,14 @@ class UserResource(Resource):
 
 class UserResourceID(Resource):
 
-    def get(self, id):
+    def get(self, id: int):
         if user := get_one_user(id):
             return user_schema.dump(user), 200  # type: ignore
         else:
             return {"error": f"Usuário com ID {id} não encontrado."}, 404
 
 
-    def patch(self, id):
+    def patch(self, id: int):
         try:
             user_data = request.json
             result = update_user(id, user_data)
@@ -58,7 +58,7 @@ class UserResourceID(Resource):
             return {"error": str(e)}, 500
 
 
-    def delete(self, id):
+    def delete(self, id: int):
         try:
             result = delete_user(id)
 

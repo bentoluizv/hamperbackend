@@ -39,14 +39,14 @@ class OrderResource(Resource):
 
 class OrderResourceID(Resource):
 
-    def get(self, id):
+    def get(self, id: int):
         if order := get_one_order(id):
             return order_schema.dump(order), 200  # type: ignore
         else:
             return {"error": f"Ordem com ID {id} não encontrado."}, 404
         
 
-    def patch(self, id):
+    def patch(self, id: int):
         try:
             order_data = request.json
             result = update_order(id, order_data)
@@ -60,7 +60,7 @@ class OrderResourceID(Resource):
             return {"error": str(e)}, 500
 
 
-    def delete(self, id):
+    def delete(self, id: int):
         try:
             result = delete_one_order(id)
 
