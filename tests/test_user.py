@@ -1,6 +1,10 @@
+import datetime
+from unittest.mock import Mock, patch
+
+
 def test_list_user_return_200(app_testing, User_10):
     """
-    Testa se a rota '/api/v1/users/' retorna o código de status 200 e os dados contidos em mock_users.
+    Test if the '/api/v1/users/' route returns status code 200 and mock_users data.
     """
     user = app_testing.test_client()
     response = user.get("http://127.0.0.1:5000/api/v1/users/")
@@ -12,7 +16,7 @@ def test_list_user_return_200(app_testing, User_10):
 
 def test_post_user_return_200(app_testing):
     """
-    Testa se a rota '/api/v1/clients/' retorna o código de status 201 (Created) ao fazer uma requisição POST com dados válidos de Usuário.
+    Test if the '/api/v1/clients/' route returns status code 201 (Created) when making a POST request with valid User data.
     """
     client = app_testing.test_client()
 
@@ -30,7 +34,7 @@ def test_post_user_return_200(app_testing):
 
 def test_post_user_return_400(app_testing):
     """
-    Testa se a rota '/api/v1/users/' retorna o código de status 400 (Solicitação Incorreta) ao fazer uma requisição POST com dados invalidos de usuario.
+    Test if the '/api/v1/users/' route returns status code 400 (Bad Request) when making a POST request with invalid user data.
     """
     client = app_testing.test_client()
 
@@ -42,7 +46,7 @@ def test_post_user_return_400(app_testing):
 
 def test_get_one_user_return_200(app_testing, user):
     """
-    Testa se a rota '/api/v1/users/<int:id>/' retorna o código de status 200 ao fazer uma requisição GET com um ID de Usuário válido.
+    Test if the '/api/v1/users/<int:id>/' route returns status code 200 when making a GET request with a valid User ID.
     """
     client = app_testing.test_client()
     response = client.get("/api/v1/users/1")
@@ -52,7 +56,7 @@ def test_get_one_user_return_200(app_testing, user):
 
 def test_get_one_user_return_404(app_testing):
     """
-    Testa se a rota '/api/v1/users/<int:id>/' retorna o código de status 404 ao fazer uma requisição GET com um ID de Usuário invalido.
+    Test if the '/api/v1/users/<int:id>/' route returns status code 404 when making a GET request with an invalid User ID.
     """
     client = app_testing.test_client()
     response = client.get("/api/v1/users/1")
@@ -62,7 +66,7 @@ def test_get_one_user_return_404(app_testing):
 
 def test_patch_users_return_200(app_testing, user):
     """
-    Testa se a rota '/api/v1/clients/<int:id>/' retorna o código de status 200 ao fazer uma requisição PATCH com um ID de Usuario válido.
+    Test if the '/api/v1/clients/<int:id>/' route returns status code 200 when making a PATCH request with a valid User ID.
     """
     client = app_testing.test_client()
 
@@ -80,7 +84,7 @@ def test_patch_users_return_200(app_testing, user):
 
 def test_patch_users_return_500(app_testing):
     """
-    Testa se a rota '/api/v1/users/<int:id>/' retorna o código de status 500 ao fazer uma requisição PATCH com um ID de Usuario invalido.
+    Test if the '/api/v1/users/<int:id>/' route returns status code 500 when making a PATCH request with an invalid User ID.
     """
     client = app_testing.test_client()
     response = client.patch("/api/v1/users/1", json={})
@@ -89,7 +93,7 @@ def test_patch_users_return_500(app_testing):
 
 def test_delete_client_return_200(app_testing, user):
     """
-    Testa se a rota '/api/v1/users/<int:id>/' retorna o código de status 200 ao fazer uma requisição DELETE com um ID de cliente válido.
+    Test if the '/api/v1/users/<int:id>/' route returns status code 200 when making a DELETE request with a valid User ID.
     """
     client = app_testing.test_client()
     response = client.delete("/api/v1/users/1")
@@ -99,9 +103,37 @@ def test_delete_client_return_200(app_testing, user):
 
 def test_delete_client_return_404(app_testing):
     """
-    Testa se a rota '/api/v1/users/<int:id>/' retorna o código de status 404 ao fazer uma requisição DELETE com um ID de cliente invalido.
+    Test if the '/api/v1/users/<int:id>/' route returns status code 404 when making a DELETE request with an invalid User ID.
     """
     client = app_testing.test_client()
     response = client.delete("/api/v1/users/1")
     assert response.status_code == 404
     assert response.json["error"] == "Usuário com ID 1 não encontrado"
+
+
+@patch('project.utils.twilio_utils.whatsapp')
+def test_send_whatsapp_message(mock_whatsapp, app_testing):
+    """
+    Test if the send_whatsapp_message function sends a message using the WhatsApp API correctly.
+    """
+    from project.utils.twilio_utils import send_whatsapp_message
+    from project.models.order_model import Order
+
+    # Arrange
+    mock_order = Mock(spec=Order)
+    mock_order.configure_mock(
+        restaurant_id=1,
+        client_id=1,
+        products=[Mock(name='Product 1', value=10.0)],
+        total_value=10.0,
+        created_at=datetime.now()
+    )
+    mock_whatsapp.send_message.return_value = {'success': True}
+
+    # Act
+    send_whatsapp_message(mock_order)
+
+    # Assert
+    mock_whatsapp.send_message.assert_called_once()
+    assert mock_whatsapp.send_message.call_args[0][0] == 'RECIPIENT_PHONE_NUMBER'
+    assert 'Pedido Recebido!' in mock_whatsapp.send_message.call_args[0][1]
