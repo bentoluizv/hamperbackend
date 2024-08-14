@@ -12,3 +12,7 @@ client_ns = Namespace(
     name="Client", description="Gerenciar cliente", path="/clients")
 order_ns = Namespace(
     name="Order", description="Gerenciar pedido", path="/orders")
+token_pix_ns = Namespace(
+    name="Token", description="", path="/pix_token")
+pix_ns = Namespace(
+    name="Pix", description="", path="/pix_qrcode")
