@@ -26,7 +26,7 @@ REDIS_URL = "redis://localhost:6379"
 [production]
 FLASK_ENV = "production"
 INCLUDES = ["default"]
-SQLALCHEMY_DATABASE_URI = "postgresql://hamper:H9hx4jWB5SErLZ3jGkagsAcj6AZRpto0@dpg-cookos8l5elc738j9tjg-a.oregon-postgres.render.com/hamper"
+SQLALCHEMY_DATABASE_URI = "postgresql://my_user:rd89uYTtSNsfkKyZYwFh5VYLRcsbiio3@dpg-cquh37tsvqrc73et9vi0-a.oregon-postgres.render.com/database_hamper"
 REDIS_URL = "rediss://red-cov6q97sc6pc73eor0i0:96aK6rAulEPQwRLGGsq0zkLvyqREIbfx@oregon-redis.render.com:6379"
 
 [homologacao]
