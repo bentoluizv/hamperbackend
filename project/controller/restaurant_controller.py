@@ -9,6 +9,8 @@ from project.service.restaurant_service import (delete_restaurant,
                                                 post_restaurant,
                                                 update_restaurant)
 from project.utils.redis_utils import delete_redis_value, get_redis_value, set_redis_value
+from project.doc_model.doc_models import restaurant_model, api
+
 
 restaurant_schema_list = RestaurantSchema(many=True)
 restaurant_schema = RestaurantSchema(many=False)
@@ -27,6 +29,7 @@ class RestaurantResource(Resource):
         return restaurants, 200
 
 
+    @api.expect(restaurant_model)
     def post(self):
         try:
             restaurant_data = request.json
@@ -72,3 +75,4 @@ class RestaurantResourceID(Resource):
 
         except Exception as e:
             return {"error": str(e)}, 500
+        
