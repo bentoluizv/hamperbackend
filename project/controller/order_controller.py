@@ -49,6 +49,7 @@ class OrderResourceID(Resource):
             return {"error": f"Ordem com ID {id} não encontrado."}, 404
         
 
+    @api.expect(order_model)
     def patch(self, id: int):
         try:
             order_data = request.json

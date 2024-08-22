@@ -9,7 +9,8 @@ api = Api(bp)
 restaurant_model = api.model(
     "Restaurant",
     {
-        "name": fields.String(required=True, description="Nome do restaurante"),
+        "name": fields.String(required=True, description="Nome do restaurante"
+        ),
         "description": fields.String(
             required=True, description="Descrição do restaurante"
         ),
@@ -24,7 +25,7 @@ restaurant_model = api.model(
         ),
         "url_image_banner": fields.String(
             required=True, description="URL do banner do restaurante"
-        ),
+        )
     },
 )
 

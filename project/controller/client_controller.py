@@ -48,6 +48,7 @@ class ClientResourceID(Resource):
             return {"error": f"Cliente com ID {id} não encontrado."}, 404
         
         
+    @api.expect(client_model)
     def patch(self, id: int):
         try:
             client_data = request.json

@@ -49,7 +49,8 @@ class RestaurantResourceID(Resource):
         else:
             return {"error": f"Restaurante com ID {id} não encontrado."}, 404
         
-        
+
+    @api.expect(restaurant_model)
     def patch(self, id: int):
         try:
             restaurant_data = request.json

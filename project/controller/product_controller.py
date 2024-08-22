@@ -47,7 +47,8 @@ class ProductResourceID(Resource):
         else:
             return {"error": f"Produto com ID {id} não encontrado."}, 404
         
-        
+    
+    @api.expect(product_model)
     def patch(self, id: int):
         try:
             product_data = request.json

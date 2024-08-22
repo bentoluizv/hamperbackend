@@ -47,6 +47,7 @@ class UserResourceID(Resource):
             return {"error": f"Usuário com ID {id} não encontrado."}, 404
 
 
+    @api.expect(user_model)
     def patch(self, id: int):
         try:
             user_data = request.json
