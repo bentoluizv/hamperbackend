@@ -35,6 +35,9 @@ restaurant_model = api.model(
         "url_image_banner": fields.String(
             required=True, description="URL do banner do restaurante"
         ),
+         "telephone": fields.String(
+            required=True, description="Telefone do restaurante"
+        ),
     },
 )
 

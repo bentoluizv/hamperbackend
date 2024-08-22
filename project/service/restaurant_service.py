@@ -31,6 +31,7 @@ def get_one_restaurant_with_products(restaurant_id: int):
             "location": restaurant.location,
             "url_image_logo": restaurant.url_image_logo,
             "url_image_banner": restaurant.url_image_banner,
+            "telephone": restaurant.telephone,
             "associated_products": []
         }
 

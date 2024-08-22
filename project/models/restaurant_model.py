@@ -9,6 +9,7 @@ class Restaurant(db.Model):
     location: str = db.Column(db.String(120), nullable=False)
     url_image_logo: str = db.Column(db.String(800), nullable=True)
     url_image_banner: str = db.Column(db.String(800), nullable=True)
+    telephone: str = db.Column(db.String(11), nullable=False)
     products = db.relationship(
         "Product", backref="restaurant", lazy=True
     )
