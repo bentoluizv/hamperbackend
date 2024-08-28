@@ -22,14 +22,14 @@ env-default:
 	export FLASK_APP=project
 	python main.py
 
-env-development:
+env-local:
 	export FLASK_APP=project
-	export FLASK_ENV=development
+	export FLASK_ENV=local
 	python main.py
 
-env-production:
+env-dev:
 	export FLASK_APP=project
-	export FLASK_ENV=production
+	export FLASK_ENV=dev
 	python main.py
 
 env-testing:
