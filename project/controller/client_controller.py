@@ -7,6 +7,8 @@ from project.service.client_service import (delete_client, get_all_clients,
                                             get_one_client, post_client,
                                             update_client)
 from project.utils.redis_utils import delete_redis_value, get_redis_value, set_redis_value
+from project.doc_model.doc_models import client_model, api
+
 
 client_schema_list = ClientSchema(many=True)
 client_schema = ClientSchema(many=False)
@@ -25,6 +27,7 @@ class ClientResource(Resource):
         return clients, 200
 
 
+    @api.expect(client_model)
     def post(self):
         try:
             client_data = request.json
@@ -45,6 +48,7 @@ class ClientResourceID(Resource):
             return {"error": f"Cliente com ID {id} não encontrado."}, 404
         
         
+    @api.expect(client_model)
     def patch(self, id: int):
         try:
             client_data = request.json

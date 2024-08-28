@@ -7,6 +7,8 @@ from project.service.product_service import (delete_product, get_all_products,
                                              get_one_product, post_product,
                                              update_product)
 from project.utils.redis_utils import delete_redis_value, get_redis_value, set_redis_value
+from project.doc_model.doc_models import product_model, api
+
 
 product_schema_list = ProductSchema(many=True)
 product_schema = ProductSchema(many=False)
@@ -24,6 +26,8 @@ class ProductResource(Resource):
         set_redis_value(key_redis, json.dumps(products))
         return products, 200
 
+
+    @api.expect(product_model)
     def post(self):
         try:
             product_data = request.json
@@ -43,7 +47,8 @@ class ProductResourceID(Resource):
         else:
             return {"error": f"Produto com ID {id} não encontrado."}, 404
         
-        
+    
+    @api.expect(product_model)
     def patch(self, id: int):
         try:
             product_data = request.json
