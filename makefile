@@ -32,6 +32,11 @@ env-dev:
 	export FLASK_ENV=dev
 	python main.py
 
+env-production:
+	export FLASK_APP=project
+	export FLASK_ENV=production
+	python main.py
+
 env-testing:
 	export FLASK_APP=project
 	export FLASK_ENV=testing
