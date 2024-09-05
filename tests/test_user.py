@@ -116,7 +116,7 @@ def test_send_whatsapp_message(mock_whatsapp, app_testing):
     """
     Test if the send_whatsapp_message function sends a message using the WhatsApp API correctly.
     """
-    from project.utils.twilio_utils import send_whatsapp_message
+    from project.utils.message_utils import send_whatsapp_message
     from project.models.order_model import Order
 
     # Arrange

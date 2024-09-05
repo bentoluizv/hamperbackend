@@ -6,7 +6,7 @@ from project.models.order_model import Order
 from project.models.product_model import Product
 from project.models.restaurant_model import Restaurant
 
-from ..utils.twilio_utils import send_whatsapp_message
+from ..utils.message_utils import send_whatsapp_message
 
 
 def get_all_orders() -> list[Order]:

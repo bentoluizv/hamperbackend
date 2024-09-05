@@ -4,11 +4,11 @@ from project.models.restaurant_model import Restaurant
 import datetime
 
 # Defina suas credenciais e IDs
-PHONE_NUMBER_ID = "371872426011780" 
+PHONE_NUMBER_ID = "xxxxxxxx" 
 # token will expire 23h
-ACCESS_TOKEN = "EAAHZAr2QDoRwBO0TYK6KnwI8FGEYuTyxb5GoTvi9vHml9cppZCbu8a7uyhZBxNcVxbYwj6ti47MndRFJZB7X0ItANJGZAe2mQXhGtWP0W1ZBd5LqexVjpcZCgx9dfgFDfrInpN1KiyzOWncX5oosFmx10FJvXgrJzP3B37bBAEFRiAW6rhaC6PxNfEyc5EIUYxEi32OFD3IKVBthAGOREGJ"
-# Testar para ver se ele consegue pegar o proprio numero do cliente e enviar...
-RECIPIENT_PHONE_NUMBER = "5581983019618"
+ACCESS_TOKEN = "xxxxxxxxxxx"
+# Numero que deve vir do pedido acredito que o order já tenha isso
+RECIPIENT_PHONE_NUMBER = "xxxxxxxxxx"
 
 def send_whatsapp_message(new_order):
     restaurant = Restaurant.query.get(new_order.restaurant_id)
