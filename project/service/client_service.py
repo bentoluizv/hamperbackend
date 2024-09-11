@@ -4,11 +4,12 @@ from ..ext.database import db
 from ..models.client_model import Client
 from typing import Dict, Optional
 
-def get_all_clients()-> list[Client]:
+
+def get_all_clients() -> list[Client]:
     return Client.query.all()
 
 
-def post_client(data_client)-> None:
+def post_client(data_client) -> None:
     data_client = request.get_json()
     client = Client(**data_client)
     db.session.add(client)

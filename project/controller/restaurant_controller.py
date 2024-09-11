@@ -44,14 +44,14 @@ class RestaurantResource(Resource):
 
 
 class RestaurantResourceID(Resource):
-    def get(self, id)-> Tuple[Optional[Dict[str, Any]], int]:
+    def get(self, id) -> Tuple[Optional[Dict[str, Any]], int]:
         print("a")
         if restaurant := get_one_restaurant(id):
             return restaurant  # type: ignore
         else:
             return {"error": f"Restaurante com ID {id} não encontrado."}, 404
 
-    def patch(self, id)-> Tuple[Dict[str, str], int]:
+    def patch(self, id) -> Tuple[Dict[str, str], int]:
         try:
             restaurant_data = request.json
             result = update_restaurant(id, restaurant_data)
@@ -64,7 +64,7 @@ class RestaurantResourceID(Resource):
         except Exception as e:
             return {"error": str(e)}, 500
 
-    def delete(self, id)-> Tuple[Dict[str, str], int]:
+    def delete(self, id) -> Tuple[Dict[str, str], int]:
         try:
             result = delete_restaurant(id)
 

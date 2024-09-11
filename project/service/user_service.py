@@ -4,18 +4,18 @@ from ..models.user_model import User
 from typing import Dict, Optional
 
 
-def get_all_users()-> list[User]:
+def get_all_users() -> list[User]:
     return User.query.all()
 
 
-def post_user(user_data)-> None:
+def post_user(user_data) -> None:
     user_data = request.get_json()
     user = User(**user_data)
     db.session.add(user)
     db.session.commit()
 
 
-def get_one_user(user_id)-> Optional[User]:
+def get_one_user(user_id) -> Optional[User]:
     return user if (user := User.query.get(user_id)) else None
 
 

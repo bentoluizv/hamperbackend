@@ -44,7 +44,7 @@ class OrderResource(Resource):
 
 
 class OrderResourceID(Resource):
-    def get(self, id)-> Tuple[Dict[str, Any], int]:
+    def get(self, id) -> Tuple[Dict[str, Any], int]:
         if order := get_one_order(id):
             return order_schema.dump(order), 200  # type: ignore
         else:
