@@ -1,5 +1,7 @@
 from ..ext.database import db
-
+from sqlalchemy.sql import func
+from datetime import datetime
+from sqlalchemy import DateTime
 
 class Restaurant(db.Model):
     id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -9,4 +11,10 @@ class Restaurant(db.Model):
     location: str = db.Column(db.String(120), nullable=False)
     url_image_logo: str = db.Column(db.String(), nullable=True)
     url_image_banner: str = db.Column(db.String(), nullable=True)
+    horario_funcionamento: datetime = db.column(db.DateTime(),server_default=func.now(),onupdate=func.now(), nullable=True)
+    horario_fechamento: datetime = db.column(db.DateTime(),server_default=func.now(),onupdate=func.now(), nullable=True)
     products = db.relationship("Product", backref="restaurant", lazy=True)
+
+    # Alembic:
+    # sa.Column('horario_funcionamento', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    # sa.Column('horario_fechamento', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
