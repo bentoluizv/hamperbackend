@@ -1,6 +1,6 @@
 from ..ext.database import db
-from sqlalchemy.sql import func
-from datetime import datetime
+from sqlalchemy.types import Time
+from datetime import time
 
 class Restaurant(db.Model):
     id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -10,6 +10,6 @@ class Restaurant(db.Model):
     location: str = db.Column(db.String(120), nullable=False)
     url_image_logo: str = db.Column(db.String(), nullable=True)
     url_image_banner: str = db.Column(db.String(), nullable=True)
-    horario_funcionamento: datetime = db.Column(db.DateTime(), server_default=func.now(), onupdate=func.now(), nullable=True)
-    horario_fechamento: datetime = db.Column(db.DateTime(),server_default=func.now(),onupdate=func.now(), nullable=True)
+    horario_funcionamento: time = db.Column(Time(), nullable=True)
+    horario_fechamento: time = db.Column(Time(), nullable=True)
     products = db.relationship("Product", backref="restaurant", lazy=True)

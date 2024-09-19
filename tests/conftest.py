@@ -4,6 +4,7 @@ import pytest
 
 from project import create_app_wsgi
 from project.ext.database import db
+from datetime import time
 from sqlalchemy import Engine, event
 from project.models.user_model import User
 from project.models.restaurant_model import Restaurant
@@ -153,6 +154,8 @@ def restaurant(app_testing):
             location="Recife-PE",
             url_image_logo="url_logo",
             url_image_banner="url_banner",
+            horario_funcionamento=time(8, 0, 0),
+            horario_fechamento=time(22, 0, 0), 
         )
         # product = Product(
         #     name='Produto Exemplo',

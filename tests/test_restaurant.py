@@ -4,7 +4,7 @@ def test_list_restaurant_return_200(app_testing, restaurant_10):
     """
     restaurant = app_testing.test_client()
     response = restaurant.get("http://127.0.0.1:5000/api/v1/restaurants/")
-    print(response.json)
+    # print(response.json)
     assert response.status_code == 200
     for restaurant in response.json:
         assert "name" in restaurant
@@ -111,7 +111,7 @@ def test_patch_restaurant_return_404(app_testing):
     """
     client = app_testing.test_client()
     response = client.patch("/api/v1/restaurants/0/products", json={})
-    print(response.json)
+    # print(response.json)
     assert response.status_code == 404
 
 
@@ -122,7 +122,7 @@ def test_delete_restaurant_return_200(app_testing, restaurant):
     client = app_testing.test_client()
     response = client.delete("/api/v1/restaurants/1/products")
     assert response.status_code == 200
-    print(response.json)
+    # print(response.json)
     assert response.json["message"] == "Restaurante com ID 1 deletado com sucesso."
 
 
@@ -133,5 +133,5 @@ def test_delete_restaurant_return_404(app_testing):
     client = app_testing.test_client()
     response = client.delete("/api/v1/restaurants/0/products")
     assert response.status_code == 404
-    print(response.json)
+    # print(response.json)
     assert response.json["error"] == "Restaurante com ID 0 não encontrado"

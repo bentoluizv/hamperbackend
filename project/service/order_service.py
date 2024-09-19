@@ -24,7 +24,7 @@ def post_order(order_data: dict) -> tuple[dict, int]:
     
     # Verificar se o restaurante está em horário de funcionamento
     current_time = datetime.now().time()
-    if not (restaurant.horario_funcionamento.time() <= current_time <= restaurant.horario_fechamento.time()):
+    if not (restaurant.horario_funcionamento <= current_time <= restaurant.horario_fechamento):
         abort(403, "O restaurante está fora do horário de funcionamento.")
         
     if not all(
