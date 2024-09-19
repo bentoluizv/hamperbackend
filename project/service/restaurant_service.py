@@ -28,6 +28,8 @@ def get_one_restaurant(restaurant_id) -> Optional[Dict[str, str]]:
             "location": restaurant.location,
             "url_image_logo": restaurant.url_image_logo,
             "url_image_banner": restaurant.url_image_banner,
+            "horario_funcionamento": restaurant.horario_funcionamento,
+            "horario_fechamento": restaurant.horario_fechamento,
             "associated_products": [],
         }
 

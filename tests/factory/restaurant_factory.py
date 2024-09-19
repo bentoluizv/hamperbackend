@@ -1,3 +1,4 @@
+from datetime import datetime
 import factory
 from factory.alchemy import SQLAlchemyModelFactory
 from project.ext.database import db
@@ -14,5 +15,7 @@ class RestaurantFactory(SQLAlchemyModelFactory):
     classification = factory.Sequence(lambda n: n)
     description = factory.Sequence(lambda n: f"Description{n}")
     location = factory.Sequence(lambda n: f"Location{n}")
+    horario_funcionamento: datetime = factory.Faker("date_time")
+    horario_fechamento: datetime = factory.Faker("date_time")
     url_image_logo = factory.Sequence(lambda n: f"Url{n}")
     url_image_banner = factory.Sequence(lambda n: f"Url{n}")

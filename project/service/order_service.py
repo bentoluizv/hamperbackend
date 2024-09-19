@@ -5,6 +5,7 @@ from project.models.client_model import Client
 from project.models.order_model import Order
 from project.models.product_model import Product
 from project.models.restaurant_model import Restaurant
+from datetime import datetime
 
 from ..utils.twilio_utils import send_whatsapp_message
 
@@ -17,9 +18,15 @@ def post_order(order_data: dict) -> tuple[dict, int]:
     if not Client.query.get(order_data["client_id"]):
         abort(404, f"Cliente com ID {order_data['client_id']} não encontrado.")
 
-    if not Restaurant.query.get(order_data["restaurant_id"]):
+    restaurant = Restaurant.query.get(order_data["restaurant_id"])
+    if not restaurant:
         abort(404, f"Restaurante com ID {order_data['restaurant_id']} não encontrado.")
-
+    
+    # Verificar se o restaurante está em horário de funcionamento
+    current_time = datetime.now().time()
+    if not (restaurant.horario_funcionamento.time() <= current_time <= restaurant.horario_fechamento.time()):
+        abort(403, "O restaurante está fora do horário de funcionamento.")
+        
     if not all(
         Product.query.get(product["product_id"]) for product in order_data["products"]
     ):

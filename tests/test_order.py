@@ -23,6 +23,8 @@ def test_post_order_return_200(app_testing, client_10, restaurant_10, product_10
 
     response = client.post("/api/v1/orders/", json=order_data)
 
+    print(response.json) # {'error': '403 Forbidden: O restaurante está fora do horário de funcionamento.'}
+
     assert response.status_code == 201
     assert response.json["message"] == "Pedido criado com sucesso!"
 

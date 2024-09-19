@@ -1,7 +1,6 @@
 from ..ext.database import db
 from sqlalchemy.sql import func
 from datetime import datetime
-from sqlalchemy import DateTime
 
 class Restaurant(db.Model):
     id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
