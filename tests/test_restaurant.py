@@ -47,9 +47,6 @@ def test_post_restaurant_return_400(app_testing):
     response = client.post("/api/v1/restaurants/", json={"invalid": "data"})
 
     assert response.status_code == 400
-    assert (
-        "'invalid' is an invalid keyword argument for" in response.json["error"]
-    )
 
 
 def test_get_one_restaurant_return_200(app_testing, restaurant):

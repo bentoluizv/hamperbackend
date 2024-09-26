@@ -26,8 +26,9 @@ def post_order(order_data: dict, current_time: Optional[datetime.time] = None) -
     elif current_time is None:
         current_time = datetime.now().time()
     
-    if not (restaurant.horario_funcionamento <= current_time <= restaurant.horario_fechamento):
-        abort(403, "O restaurante está fora do horário de funcionamento.")
+    if restaurant.horario_funcionamento and restaurant.horario_fechamento:
+        if not (restaurant.horario_funcionamento <= current_time <= restaurant.horario_fechamento):
+            abort(403, "O restaurante está fora do horário de funcionamento.")
         
     if not all(Product.query.get(product["product_id"]) for product in order_data["products"]):
         abort(404, "Um ou mais produtos não foram encontrados.")
