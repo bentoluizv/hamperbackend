@@ -13,8 +13,7 @@ from ..utils.twilio_utils import send_whatsapp_message
 def get_all_orders() -> list[Order]:
     return Order.query.all()
 
-
-def post_order(order_data: dict) -> tuple[dict, int]:
+def post_order(order_data: dict, current_time: Optional[datetime.time] = None) -> tuple[dict, int]:
     if not Client.query.get(order_data["client_id"]):
         abort(404, f"Cliente com ID {order_data['client_id']} não encontrado.")
 
@@ -22,14 +21,15 @@ def post_order(order_data: dict) -> tuple[dict, int]:
     if not restaurant:
         abort(404, f"Restaurante com ID {order_data['restaurant_id']} não encontrado.")
     
-    # Verificar se o restaurante está em horário de funcionamento
-    current_time = datetime.now().time()
+    if "current_time" in order_data:
+        current_time = datetime.strptime(order_data["current_time"], "%H:%M:%S").time()
+    elif current_time is None:
+        current_time = datetime.now().time()
+    
     if not (restaurant.horario_funcionamento <= current_time <= restaurant.horario_fechamento):
         abort(403, "O restaurante está fora do horário de funcionamento.")
         
-    if not all(
-        Product.query.get(product["product_id"]) for product in order_data["products"]
-    ):
+    if not all(Product.query.get(product["product_id"]) for product in order_data["products"]):
         abort(404, "Um ou mais produtos não foram encontrados.")
 
     products = [

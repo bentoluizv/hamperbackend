@@ -1,5 +1,5 @@
 from flask import request
-
+from datetime import datetime
 from ..ext.database import db
 from ..models.restaurant_model import Restaurant
 from typing import Dict, Optional
@@ -11,6 +11,8 @@ def get_all_restaurants() -> list[Restaurant]:
 
 def post_restaurant(data_restaurant) -> None:
     data_restaurant = request.get_json()
+    data_restaurant['horario_funcionamento'] = datetime.strptime(data_restaurant['horario_funcionamento'], '%H:%M:%S').time()
+    data_restaurant['horario_fechamento'] = datetime.strptime(data_restaurant['horario_fechamento'], '%H:%M:%S').time()
     restaurant = Restaurant(**data_restaurant)
     db.session.add(restaurant)
     db.session.commit()

@@ -39,12 +39,11 @@ restaurant_model = api.model(
         "url_image_banner": fields.String(
             required=True, description="URL do banner do restaurante"
         ),
-        # TODO: é datetime ou time(String)? acho que a resposta é String
         "horario_funcionamento": fields.String(
-            required=True, description="Horário de funcionamento"
+            required=False, description="Horário de funcionamento"
         ),
         "horario_fechamento": fields.String(
-            required=True, description="Horário de fechamento"
+            required=False, description="Horário de fechamento"
         ),
     },
 )

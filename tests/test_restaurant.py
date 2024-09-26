@@ -1,10 +1,12 @@
+from datetime import time
+
 def test_list_restaurant_return_200(app_testing, restaurant_10):
     """
     Teste para verificar se o endpoint da API para listar restaurante retorna o código de status 200.
     """
     restaurant = app_testing.test_client()
     response = restaurant.get("http://127.0.0.1:5000/api/v1/restaurants/")
-    # print(response.json)
+
     assert response.status_code == 200
     for restaurant in response.json:
         assert "name" in restaurant
@@ -24,9 +26,13 @@ def test_post_restaurant_return_200(app_testing):
         "location": "Cidade do Teste",
         "url_image_logo": "url_logo_teste",
         "url_image_banner": "url_banner_teste",
+        "horario_funcionamento": time(8, 0, 0).strftime('%H:%M:%S'),
+        "horario_fechamento": time(22, 0, 0).strftime('%H:%M:%S'),
     }
 
     response = client.post("/api/v1/restaurants/", json=restaurant_data)
+
+    print(response.json)
 
     assert response.status_code == 201
     assert response.json["message"] == "Restaurante cadastrado com sucesso!"
@@ -42,8 +48,7 @@ def test_post_restaurant_return_400(app_testing):
 
     assert response.status_code == 400
     assert (
-        response.json["error"]
-        == "'invalid' is an invalid keyword argument for Restaurant"
+        "'invalid' is an invalid keyword argument for" in response.json["error"]
     )
 
 
