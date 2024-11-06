@@ -26,11 +26,11 @@ REDIS_URL = "redis://localhost:6379"
 [dev]
 FLASK_ENV = "dev"
 INCLUDES = ["default"]
-SQLALCHEMY_DATABASE_URI = "postgresql://database_hamper_oi4t_user:bWCx8IpgkNQpVZmyKvI8C9YfVJWIOi21@dpg-cr7o1adumphs73aet7ig-a.oregon-postgres.render.com/database_hamper_oi4t"
+SQLALCHEMY_DATABASE_URI = "postgresql://user_development:rQ5PD1wl4ES8kCvU5O3Jr4lgRlrWKmqe@dpg-cslqo668ii6s73aqj84g-a.oregon-postgres.render.com/database_development_qwlo"
 REDIS_URL = "rediss://red-cov6q97sc6pc73eor0i0:96aK6rAulEPQwRLGGsq0zkLvyqREIbfx@oregon-redis.render.com:6379"
 
 [production]
 FLASK_ENV = "production"
 INCLUDES = ["default"]
-SQLALCHEMY_DATABASE_URI = "postgresql://hamper_user:PSFKWm1dAIbfSWPBv25SAD2Q4Q3mrB53@dpg-crcb8qbtq21c73d5dhr0-a.oregon-postgres.render.com/database_hamper_production"
+SQLALCHEMY_DATABASE_URI = "postgresql://user_production:i8jYm36eMupLijlrbHblmktxFmQ0IXNN@dpg-cslqj2dumphs73bh3sk0-a.oregon-postgres.render.com/database_production_wzmc"
 REDIS_URL = "rediss://red-crcbc4l2ng1s739qhie0:32UvlizR2k5FCvNu9wZyZZssVjvCkl1h@oregon-redis.render.com:6379"
