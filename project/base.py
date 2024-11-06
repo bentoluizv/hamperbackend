@@ -8,7 +8,6 @@ from flask import Flask
 from flask_cors import CORS
 
 
-
 def create_app(**config) -> Flask:
     """
     Configuração do CORS e carregamento das extensões

@@ -39,6 +39,12 @@ restaurant_model = api.model(
         "url_image_banner": fields.String(
             required=True, description="URL do banner do restaurante"
         ),
+        "horario_funcionamento": fields.String(
+            required=False, description="Horário de funcionamento"
+        ),
+        "horario_fechamento": fields.String(
+            required=False, description="Horário de fechamento"
+        ),
     },
 )
 

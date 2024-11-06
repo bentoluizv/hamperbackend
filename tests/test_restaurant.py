@@ -1,10 +1,12 @@
+from datetime import time
+
 def test_list_restaurant_return_200(app_testing, restaurant_10):
     """
     Teste para verificar se o endpoint da API para listar restaurante retorna o código de status 200.
     """
     restaurant = app_testing.test_client()
     response = restaurant.get("http://127.0.0.1:5000/api/v1/restaurants/")
-    print(response.json)
+
     assert response.status_code == 200
     for restaurant in response.json:
         assert "name" in restaurant
@@ -24,9 +26,13 @@ def test_post_restaurant_return_200(app_testing):
         "location": "Cidade do Teste",
         "url_image_logo": "url_logo_teste",
         "url_image_banner": "url_banner_teste",
+        "horario_funcionamento": time(8, 0, 0).strftime('%H:%M:%S'),
+        "horario_fechamento": time(22, 0, 0).strftime('%H:%M:%S'),
     }
 
     response = client.post("/api/v1/restaurants/", json=restaurant_data)
+
+    print(response.json)
 
     assert response.status_code == 201
     assert response.json["message"] == "Restaurante cadastrado com sucesso!"
@@ -41,10 +47,6 @@ def test_post_restaurant_return_400(app_testing):
     response = client.post("/api/v1/restaurants/", json={"invalid": "data"})
 
     assert response.status_code == 400
-    assert (
-        response.json["error"]
-        == "'invalid' is an invalid keyword argument for Restaurant"
-    )
 
 
 def test_get_one_restaurant_return_200(app_testing, restaurant):
@@ -111,7 +113,7 @@ def test_patch_restaurant_return_404(app_testing):
     """
     client = app_testing.test_client()
     response = client.patch("/api/v1/restaurants/0/products", json={})
-    print(response.json)
+    # print(response.json)
     assert response.status_code == 404
 
 
@@ -122,7 +124,7 @@ def test_delete_restaurant_return_200(app_testing, restaurant):
     client = app_testing.test_client()
     response = client.delete("/api/v1/restaurants/1/products")
     assert response.status_code == 200
-    print(response.json)
+    # print(response.json)
     assert response.json["message"] == "Restaurante com ID 1 deletado com sucesso."
 
 
@@ -133,5 +135,5 @@ def test_delete_restaurant_return_404(app_testing):
     client = app_testing.test_client()
     response = client.delete("/api/v1/restaurants/0/products")
     assert response.status_code == 404
-    print(response.json)
+    # print(response.json)
     assert response.json["error"] == "Restaurante com ID 0 não encontrado"

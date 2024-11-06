@@ -1,3 +1,4 @@
+from datetime import time
 from .database import db
 from ..models.client_model import Client
 from ..models.product_model import Product
@@ -29,6 +30,8 @@ def populate_database() -> None:
             location="Recife-PE",
             url_image_logo="url_logo",
             url_image_banner="url_banner",
+            horario_funcionamento=time(8, 0, 0),  # 08:00:00
+            horario_fechamento=time(22, 0, 0)     # 22:00:00
         ),
     ]
 

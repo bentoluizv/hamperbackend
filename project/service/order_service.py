@@ -5,6 +5,7 @@ from project.models.client_model import Client
 from project.models.order_model import Order
 from project.models.product_model import Product
 from project.models.restaurant_model import Restaurant
+from datetime import datetime
 
 from ..utils.twilio_utils import send_whatsapp_message
 
@@ -12,25 +13,37 @@ from ..utils.twilio_utils import send_whatsapp_message
 def get_all_orders() -> list[Order]:
     return Order.query.all()
 
-
-def post_order(order_data: dict) -> tuple[dict, int]:
+def post_order(order_data: dict, current_time: Optional[datetime.time] = None) -> tuple[dict, int]:
     if not Client.query.get(order_data["client_id"]):
         abort(404, f"Cliente com ID {order_data['client_id']} não encontrado.")
 
-    if not Restaurant.query.get(order_data["restaurant_id"]):
+    restaurant = Restaurant.query.get(order_data["restaurant_id"])
+    if not restaurant:
         abort(404, f"Restaurante com ID {order_data['restaurant_id']} não encontrado.")
-
+    
+    if "current_time" in order_data:
+        current_time = datetime.strptime(order_data["current_time"], "%H:%M:%S").time()
+    elif current_time is None:
+        current_time = datetime.now().time()
+    
+    if restaurant.horario_funcionamento and restaurant.horario_fechamento:
+        if not (restaurant.horario_funcionamento <= current_time <= restaurant.horario_fechamento):
+            abort(403, "O restaurante está fora do horário de funcionamento.")
+        
     if not all(Product.query.get(product["product_id"]) for product in order_data["products"]):
         abort(404, "Um ou mais produtos não foram encontrados.")
 
-    products = [(Product.query.get(product["product_id"]), product["quantity"]) for product in order_data["products"]]
+    products = [
+        (Product.query.get(product["product_id"]), product["quantity"])
+        for product in order_data["products"]
+    ]
 
     products_value = [product.value * quantity for product, quantity in products]
 
     new_order = Order(
         client_id=order_data["client_id"],
         restaurant_id=order_data["restaurant_id"],
-        products=[product for product, quantity in products], 
+        products=[product for product, quantity in products],
         total_value=sum(products_value),
     )
     db.session.add(new_order)

@@ -1,3 +1,6 @@
+from datetime import time
+
+
 def test_list_order_return_200(
     app_testing, client_10, restaurant_10, product_10, order_10
 ):
@@ -19,12 +22,34 @@ def test_post_order_return_200(app_testing, client_10, restaurant_10, product_10
         "restaurant_id": 5,
         "products": [{"product_id": 5, "quantity": 1}],
         "created_at": "2024-03-11 10:00:00",
+        "current_time": time(14, 0).strftime("%H:%M:%S"),  
     }
 
     response = client.post("/api/v1/orders/", json=order_data)
 
+    print(f"Status Code: {response.status_code}")
+    print(f"Response JSON: {response.json}")
+
     assert response.status_code == 201
     assert response.json["message"] == "Pedido criado com sucesso!"
+
+
+
+def test_post_order_return_400(app_testing, client_10, restaurant_10, product_10):
+    client = app_testing.test_client()
+
+    order_data = {
+        "client_id": 4,
+        "restaurant_id": 5,
+        "products": [{"product_id": 5, "quantity": 1}],
+        "created_at": "2024-03-11 10:00:00",
+        "current_time": time(22, 0).strftime("%H:%M:%S"),  
+    }
+
+    response = client.post("/api/v1/orders/", json=order_data)
+
+    assert response.status_code == 400
+    assert response.json["error"] == "403 Forbidden: O restaurante está fora do horário de funcionamento."
 
 
 def test_post_order_return_400(app_testing, restaurant_10, product_10):
