@@ -10,6 +10,7 @@ class Restaurant(db.Model):
     url_image_logo: str = db.Column(db.String(800), nullable=True)
     url_image_banner: str = db.Column(db.String(800), nullable=True)
     telephone: str = db.Column(db.String(11), nullable=False)
+    has_plastic: bool = db.Column(db.Boolean, nullable= False, default=False)
     products = db.relationship(
         "Product", backref="restaurant", lazy=True
     )
