@@ -1,6 +1,3 @@
-from flask import Blueprint
-from flask_restx import Api, fields
-
 from project.controller.user_controller import UserResource, UserResourceID
 from project.utils.namespace import (client_ns, order_ns, product_ns,
                                      restaurant_ns, user_ns)
@@ -73,30 +70,9 @@ order_model = api.model(
     },
 )
 
-client_model = api.model(
-    "Client",
-    {
-        "client_name": fields.String(required=True, description="Nome do cliente"),
-        "client_cellphone": fields.String(
-            required=True, description="Celular do cliente"
-        ),
-        "client_address": fields.String(
-            required=True, description="Endereço do cliente"
-        ),
-        "client_address_number": fields.Integer(
-            required=True, description="Número do endereço do cliente"
-        ),
-        "client_address_complement": fields.String(
-            required=True, description="Complemento do endereço do cliente"
-        ),
-        "client_address_neighborhood": fields.String(
-            required=True, description="Bairro do endereço do cliente"
-        ),
-        "client_zip_code": fields.String(
-            required=True, description="CEP do endereço do cliente"
-        ),
-    },
-)
+from ...controller.restaurant_controller import RestaurantResource, RestaurantResourceID
+from project.doc_model.doc_models import api, bp, restaurant_model, user_model, product_model, client_model, order_model
+
 
 # Adicionar os modelos aos namespaces
 restaurant_ns.models["RestaurantModel"] = restaurant_model

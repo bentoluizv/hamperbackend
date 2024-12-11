@@ -8,6 +8,8 @@ from project.service.order_service import (delete_one_order, get_all_orders,
                                            get_one_order, post_order,
                                            update_order)
 from project.utils.redis_utils import delete_redis_value, get_redis_value, set_redis_value
+from project.doc_model.doc_models import order_model, api
+
 
 order_schema_list = OrderSchema(many=True)
 order_schema = OrderSchema(many=False)
@@ -26,6 +28,7 @@ class OrderResource(Resource):
         return orders, 200
 
 
+    @api.expect(order_model)
     def post(self):
         try:
             order_data = request.json
@@ -46,6 +49,7 @@ class OrderResourceID(Resource):
             return {"error": f"Ordem com ID {id} não encontrado."}, 404
         
 
+    @api.expect(order_model)
     def patch(self, id: int):
         try:
             order_data = request.json
