@@ -15,14 +15,21 @@ product_schema = ProductSchema(many=False)
 class ProductResource(Resource):
 
     def get(self):
-        key_redis = "products"
-        products = get_redis_value(key_redis)
-        if products:
-            return products
-        products = get_all_products()
-        products = product_schema_list.dump(products)
-        set_redis_value(key_redis, json.dumps(products))
-        return products, 200
+        try:
+            has_gluten = request.args.get("has_gluten")
+            has_lactose = request.args.get("has_lactose")
+            is_vegan = request.args.get("is_vegan")
+            is_vegetarian = request.args.get("is_vegetarian")
+            key_redis = "products"
+            products = get_redis_value(key_redis)
+            if products:
+                return products
+            products = get_all_products(has_gluten, has_lactose, is_vegan, is_vegetarian)
+            products = product_schema_list.dump(products)
+            set_redis_value(key_redis, json.dumps(products))
+            return products, 200
+        except Exception as e:
+            return {"error": str(e)}, 400
 
     def post(self):
         try:
@@ -38,10 +45,13 @@ class ProductResource(Resource):
 class ProductResourceID(Resource):
 
     def get(self, id: int):
-        if product := get_one_product(id):
-            return product_schema.dump(product), 200  # type: ignore
-        else:
-            return {"error": f"Produto com ID {id} não encontrado."}, 404
+        try:
+            if product := get_one_product(id):
+                return product_schema.dump(product), 200  # type: ignore
+            else:
+                return {"error": f"Produto com ID {id} não encontrado."}, 404
+        except Exception as e:
+            return {"error": str(e)}, 400
         
         
     def patch(self, id: int):
