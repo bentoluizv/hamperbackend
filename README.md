@@ -18,6 +18,7 @@ export FLASK_ENV=testing
 ### Ambiente produção
 ```
 export FLASK_ENV=production
+export FLASK_APP=project
 ```
 ## Makefile
 ### Rodar aplicação local
