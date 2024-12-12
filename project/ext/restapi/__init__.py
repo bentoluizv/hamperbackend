@@ -8,6 +8,9 @@ from ...controller.product_controller import ProductResource, ProductResourceID
 from ...controller.restaurant_controller import (RestaurantResource,
                                                  RestaurantResourceID)
 
+from flask import Blueprint
+from flask_restx import Api, fields
+
 
 bp = Blueprint("restapi", __name__, url_prefix="/api/v1")
 api = Api(bp)
