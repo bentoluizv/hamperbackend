@@ -77,14 +77,12 @@ from ...controller.restaurant_controller import RestaurantResource, RestaurantRe
 from project.doc_model.doc_models import api, bp, restaurant_model, user_model, product_model, client_model, order_model
 
 
-# Adicionar os modelos aos namespaces
 restaurant_ns.models["RestaurantModel"] = restaurant_model
 user_ns.models["UserModel"] = user_model
 product_ns.models["ProductModel"] = product_model
 client_ns.models["ClientModel"] = client_model
 order_ns.models["OrderModel"] = order_model
 
-# # Adicionar os recursos aos namespaces
 restaurant_ns.add_resource(RestaurantResource, "/")
 restaurant_ns.add_resource(RestaurantResourceID, "/<int:id>/products")
 
@@ -101,7 +99,6 @@ order_ns.add_resource(OrderResource, "/")
 order_ns.add_resource(OrderResourceID, "/<int:id>")
 
 
-# Adicionar os namespaces ao API
 api.add_namespace(restaurant_ns)
 api.add_namespace(user_ns)
 api.add_namespace(product_ns)
