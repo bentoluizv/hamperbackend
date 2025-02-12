@@ -17,6 +17,7 @@ class Order(db.Model):
     client_id: int = db.Column(db.Integer, db.ForeignKey(Client.id))
     restaurant_id: int = db.Column(db.Integer, db.ForeignKey(Restaurant.id))
     total_value: float = db.Column(db.Float)
+    payment: str = db.Column(db.Enum("Dinheiro", "Pix", name="payment_type"), nullable=False)
     products = db.relationship(
         "Product",
         secondary=order_product_association,

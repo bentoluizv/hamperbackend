@@ -32,9 +32,15 @@ class OrderResource(Resource):
     def post(self):
         try:
             order_data = request.json
-            post_order(order_data)
+            if order_data['payment'] == "Pix" or order_data['payment'] == "Dinheiro":
+                response = post_order(order_data)
+                if response and order_data['payment'] == 'Pix':
+                    return {"message": "Pedido cadastrado com sucesso!", "pix_copia_e_cola": response['pixCopiaECola'], "base64": response['pixBase64']}, 201
+                elif order_data['payment'] == 'Dinheiro':
+                    return {"message": "Pedido cadastrado com sucesso!"}
+            else:
+                return {"message": "Meio de pagamento inválido. (Opções: Pix e Dinheiro)"}
             delete_redis_value("orders")
-            return {"message": "Pedido criado com sucesso!"}, 201
         
         except Exception as e:
             return {"error": str(e)}, 400
@@ -75,3 +81,4 @@ class OrderResourceID(Resource):
 
         except Exception as e:
             return {"error": str(e)}, 500
+        
