@@ -17,10 +17,6 @@ COPY . .
 
 ENV PATH=/root/.local/bin:$PATH
 
-ENV FLASK_ENV=local
-
-ENV FLASK_APP=project
-
 EXPOSE 5000
 
 CMD ["gunicorn","-w", "4", "-b", "0.0.0.0:5000", "project:create_app()"]
