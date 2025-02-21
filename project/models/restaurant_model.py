@@ -1,5 +1,6 @@
 from ..ext.database import db
-
+from sqlalchemy.types import Time
+from datetime import time
 
 class Restaurant(db.Model):
     id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -15,3 +16,4 @@ class Restaurant(db.Model):
         "Product", backref="restaurant", lazy=True
     )
     
+

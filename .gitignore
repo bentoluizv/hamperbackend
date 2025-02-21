@@ -60,6 +60,7 @@ MANIFEST
 .env.local
 .env.*.local
 .secrets.toml
+.tool-versions
 
 # Diretórios específicos do Flask a serem excluídos
 instance/

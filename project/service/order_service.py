@@ -1,7 +1,6 @@
 from decimal import Decimal
 from flask import abort
 from efipay import EfiPay
-
 from project.ext.database import db
 from project.models.client_model import Client
 from project.models.order_model import Order
@@ -53,8 +52,17 @@ def save_client(order_data: dict):
 def post_order(order_data: dict):
     if not Restaurant.query.get(order_data['restaurant_id']):
         abort(404, f"Restaurante com ID {order_data['restaurant_id']} não encontrado.")
-
-    if not all(Product.query.get(product_id) for product_id in order_data['products']):
+    
+    if "current_time" in order_data:
+        current_time = datetime.strptime(order_data["current_time"], "%H:%M:%S").time()
+    elif current_time is None:
+        current_time = datetime.now().time()
+    
+    if restaurant.horario_funcionamento and restaurant.horario_fechamento:
+        if not (restaurant.horario_funcionamento <= current_time <= restaurant.horario_fechamento):
+            abort(403, "O restaurante está fora do horário de funcionamento.")
+        
+    if not all(Product.query.get(product["product_id"]) for product in order_data["products"]):
         abort(404, "Um ou mais produtos não foram encontrados.")
 
     products = [Product.query.get(product_id) for product_id in order_data['products']]
@@ -118,7 +126,6 @@ def post_order(order_data: dict):
     
     return None
 
-
 def get_one_order(order_id: int):
     return order if (order := Order.query.get(order_id)) else None
 
@@ -127,7 +134,7 @@ def update_order(id: int, updated_data: dict):
     order = get_one_order(id)
 
     if order is None:
-        abort(404, error=f"Ordem com ID {id} não encontrado")
+        return {"error": f"Ordem com ID {id} não encontrado."}
 
     try:
         for key, value in updated_data.items():
@@ -140,8 +147,7 @@ def update_order(id: int, updated_data: dict):
 
     except Exception as e:
         db.session.rollback()
-        abort(500, error=str(e))
-
+        return {"error": str(e)}
 
 def delete_one_order(id: int):
     order = get_one_order(id)

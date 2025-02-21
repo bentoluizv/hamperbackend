@@ -1,8 +1,7 @@
 import json
-from flask import abort, request
+from flask import request
 from flask_restx import Resource
 from project.ext.serializer import RestaurantSchema
-
 from project.service.restaurant_service import (delete_restaurant,
                                                 get_all_restaurants,
                                                 get_one_restaurant_with_products,
@@ -12,13 +11,13 @@ from project.utils.redis_utils import delete_redis_value, get_redis_value, set_r
 from project.doc_model.doc_models import restaurant_model, api
 
 
+
 restaurant_schema_list = RestaurantSchema(many=True)
 restaurant_schema = RestaurantSchema(many=False)
 
 
 class RestaurantResource(Resource):
-
-    def get(self):
+    def get(self) -> Tuple[List[Dict[str, Any]], int]:
         key_redis = "restaurants"
         restaurants = get_redis_value(key_redis)
         if restaurants:
@@ -28,21 +27,20 @@ class RestaurantResource(Resource):
         set_redis_value(key_redis, json.dumps(restaurants))
         return restaurants, 200
 
-
     @api.expect(restaurant_model)
     def post(self):
+
         try:
             restaurant_data = request.json
             post_restaurant(restaurant_data)
             delete_redis_value("restaurants")
             return {"message": "Restaurante cadastrado com sucesso!"}, 201
-        
+
         except Exception as e:
             return {"error": str(e)}, 400
 
 
 class RestaurantResourceID(Resource):
-
     def get(self, id: int):
         if restaurant := get_one_restaurant_with_products(id):
             return restaurant  # type: ignore
@@ -52,18 +50,18 @@ class RestaurantResourceID(Resource):
 
     @api.expect(restaurant_model)
     def patch(self, id: int):
+
         try:
             restaurant_data = request.json
             result = update_restaurant(id, restaurant_data)
 
             if "error" in result:
-                abort(404, message=result["error"])
+                return {"error": result["error"]}, 404
             delete_redis_value("clients")
             return {"message": result["message"]}, 200
 
         except Exception as e:
             return {"error": str(e)}, 500
-
 
     def delete(self, id: int):
         try:
@@ -76,4 +74,4 @@ class RestaurantResourceID(Resource):
 
         except Exception as e:
             return {"error": str(e)}, 500
-        
+

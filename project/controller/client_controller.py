@@ -1,5 +1,5 @@
 import json
-from flask import abort, request
+from flask import request
 from flask_restx import Resource
 from project.ext.serializer import ClientSchema
 
@@ -15,8 +15,7 @@ client_schema = ClientSchema(many=False)
 
 
 class ClientResource(Resource):
-
-    def get(self):
+    def get(self) -> Tuple[List[Dict[str, Any]], int]:
         key_redis = "clients"
         clients = get_redis_value(key_redis)
         if clients:
@@ -26,7 +25,6 @@ class ClientResource(Resource):
         set_redis_value(key_redis, json.dumps(clients))
         return clients, 200
 
-
     @api.expect(client_model)
     def post(self):
         try:
@@ -34,20 +32,18 @@ class ClientResource(Resource):
             post_client(client_data)
             delete_redis_value("clients")
             return {"message": "Cliente cadastrado com sucesso!"}, 201
-        
+
         except Exception as e:
             return {"error": str(e)}, 400
 
 
 class ClientResourceID(Resource):
-
     def get(self, id: int):
         if client := get_one_client(id):
             return client_schema.dump(client), 200
         else:
             return {"error": f"Cliente com ID {id} não encontrado."}, 404
-        
-        
+          
     @api.expect(client_model)
     def patch(self, id: int):
         try:
@@ -55,13 +51,12 @@ class ClientResourceID(Resource):
             result = update_client(id, client_data)
 
             if "error" in result:
-                abort(404, message=result["error"])
+                return {"error": result["error"]}, 404
             delete_redis_value("clients")
             return {"message": result["message"]}, 200
-        
+
         except Exception as e:
             return {"error": str(e)}, 500
-        
 
     def delete(self, id: int):
         try:
@@ -69,8 +64,8 @@ class ClientResourceID(Resource):
 
             if "error" in result:
                 return {"error": result["error"]}, 404
-            delete_redis_value("clients") 
+            delete_redis_value("clients")
             return {"message": result["message"]}, 200
-        
+
         except Exception as e:
             return {"error": str(e)}, 500

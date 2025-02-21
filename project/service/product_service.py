@@ -1,7 +1,7 @@
 from flask import request
 from ..ext.database import db
+from typing import Dict, Optional
 from ..models.product_model import Product
-
 
 def get_all_products(has_gluten, has_lactose, is_vegan, is_vegetarian):
     query = Product.query
@@ -17,7 +17,6 @@ def get_all_products(has_gluten, has_lactose, is_vegan, is_vegetarian):
     products = query.all()
     return products
 
-
 def post_product(product_data: dict):
     product_data = request.get_json()
 
@@ -29,7 +28,6 @@ def post_product(product_data: dict):
     product = Product(**product_data)
     db.session.add(product)
     db.session.commit()
-
 
 def get_one_product(product_id: int):
     return product if (product := Product.query.get(product_id)) else None
@@ -50,7 +48,6 @@ def update_product(id: int, updated_data: dict):
     except Exception as e:
         db.session.rollback()
         return {"error": str(e)}
-
 
 def delete_product(id: int):
     product = get_one_product(id)

@@ -1,8 +1,7 @@
 import json
-from flask import abort, request
+from flask import request
 from flask_restx import Resource
 from project.ext.serializer import ProductSchema
-
 from project.service.product_service import (delete_product, get_all_products,
                                              get_one_product, post_product,
                                              update_product)
@@ -15,7 +14,6 @@ product_schema = ProductSchema(many=False)
 
 
 class ProductResource(Resource):
-
     def get(self):
         try:
             has_gluten = request.args.get("has_gluten")
@@ -41,13 +39,12 @@ class ProductResource(Resource):
             post_product(product_data)
             delete_redis_value("products")
             return {"message": "Produto cadastrado com sucesso!"}, 201
-        
+
         except Exception as e:
             return {"error": str(e)}, 400
 
 
 class ProductResourceID(Resource):
-
     def get(self, id: int):
         try:
             if product := get_one_product(id):
@@ -60,20 +57,21 @@ class ProductResourceID(Resource):
     
     @api.expect(product_model)
     def patch(self, id: int):
+
         try:
             product_data = request.json
             result = update_product(id, product_data)
 
             if "error" in result:
-                abort(404, message=result["error"])
+                return {"error": result["error"]}, 404
             delete_redis_value("clients")
             return {"message": result["message"]}, 200
 
         except Exception as e:
             return {"error": str(e)}, 500
 
-
     def delete(self, id: int):
+
         try:
             result = delete_product(id)
 
