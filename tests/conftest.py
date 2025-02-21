@@ -1,5 +1,7 @@
 import os
+from unittest.mock import patch
 
+import fakeredis
 import pytest
 
 from project import create_app_wsgi
@@ -57,19 +59,13 @@ def app_testing():
 
 
 @pytest.fixture
-def user(app_testing):
-    """
-    Cria uma ingessão de User para os testes.
+def fake_redis():
+    return fakeredis.FakeStrictRedis()
 
-    Args:
-        session (Session): Uma instância de Session do SQLAlchemy.
 
-    Returns:
-        User: Uma instância de User do sistema.
-    """
-    app = app_testing
-    with app.app_context():
-        user = User(firstname="Tony", lastname="Stark", email="ironman@icloud.com")
+def seeding_database():
+    for user_data in mock_users:
+        user = User(**user_data)
         db.session.add(user)
         db.session.commit()
         db.session.refresh(user)

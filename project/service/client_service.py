@@ -8,19 +8,19 @@ from typing import Dict, Optional
 def get_all_clients() -> list[Client]:
     return Client.query.all()
 
+def post_client(data_client: dict):
 
-def post_client(data_client) -> None:
     data_client = request.get_json()
     client = Client(**data_client)
     db.session.add(client)
     db.session.commit()
 
-
-def get_one_client(id) -> Optional[Client]:
+def get_one_client(id: int):
     return client if (client := Client.query.get(id)) else None
 
 
-def update_client(id, updated_data) -> Dict[str, str]:
+def update_client(id: int, updated_data: dict):
+
     client = get_one_client(id)
 
     if client is None:
@@ -37,8 +37,8 @@ def update_client(id, updated_data) -> Dict[str, str]:
         db.session.rollback()
         return {"error": str(e)}
 
+def delete_client(id: int):
 
-def delete_client(id) -> Dict[str, str]:
     client = get_one_client(id)
 
     if client is None:

@@ -8,8 +8,7 @@ from typing import Dict, Optional
 def get_all_restaurants() -> list[Restaurant]:
     return Restaurant.query.all()
 
-
-def post_restaurant(data_restaurant) -> None:
+def post_restaurant(data_restaurant: dict):
     data_restaurant = request.get_json()
     data_restaurant['horario_funcionamento'] = datetime.strptime(data_restaurant['horario_funcionamento'], '%H:%M:%S').time()
     data_restaurant['horario_fechamento'] = datetime.strptime(data_restaurant['horario_fechamento'], '%H:%M:%S').time()
@@ -17,8 +16,11 @@ def post_restaurant(data_restaurant) -> None:
     db.session.add(restaurant)
     db.session.commit()
 
+def get_one_restaurant_by_id(restaurant_id: int):
+    return Restaurant.query.get(restaurant_id)
 
-def get_one_restaurant(restaurant_id) -> Optional[Dict[str, str]]:
+
+def get_one_restaurant_with_products(restaurant_id: int):
     restaurant = Restaurant.query.get(restaurant_id)
 
     if restaurant:
@@ -30,9 +32,8 @@ def get_one_restaurant(restaurant_id) -> Optional[Dict[str, str]]:
             "location": restaurant.location,
             "url_image_logo": restaurant.url_image_logo,
             "url_image_banner": restaurant.url_image_banner,
-            "horario_funcionamento": restaurant.horario_funcionamento.strftime("%H:%M:%S"),
-            "horario_fechamento": restaurant.horario_fechamento.strftime("%H:%M:%S"),
-            "associated_products": [],
+            "telephone": restaurant.telephone,
+            "associated_products": []
         }
 
         for product in restaurant.products:
@@ -50,9 +51,8 @@ def get_one_restaurant(restaurant_id) -> Optional[Dict[str, str]]:
     else:
         return None
 
-
-def update_restaurant(id, updated_data) -> Dict[str, str]:
-    restaurant = get_one_restaurant(id)
+def update_restaurant(id: int, updated_data: dict):
+    restaurant = get_one_restaurant_by_id(id)
 
     if restaurant is None:
         return {"error": f"Restaurante com ID {id} não encontrado"}
@@ -68,10 +68,9 @@ def update_restaurant(id, updated_data) -> Dict[str, str]:
         db.session.rollback()
         return {"error": str(e)}
 
-
-def delete_restaurant(id) -> Dict[str, str]:
-    restaurant = Restaurant.query.get(id)
-
+def delete_restaurant(id: int):
+    restaurant = get_one_restaurant_by_id(id)
+    
     if restaurant is None:
         return {"error": f"Restaurante com ID {id} não encontrado"}
 

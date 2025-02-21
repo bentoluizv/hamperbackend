@@ -76,12 +76,8 @@ $ flask db init # Executar apenas uma vez para inicializar a conexão
 $ flask db migrate # Criar a instância do SQLAlchemy
 $ flask db upgrade # Criar as tabelas no banco de dados
 ```
-
-### Executando o Projeto
-
-```bash
-# Inicializar a aplicação
-$ python -m project run
+export FLASK_ENV=production
+export FLASK_APP=project
 ```
 
 ## :blue_book: Documentação da API

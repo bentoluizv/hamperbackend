@@ -1,6 +1,3 @@
-from flask import Blueprint
-from flask_restx import Api, fields
-
 from project.controller.user_controller import UserResource, UserResourceID
 from project.utils.namespace import (
     client_ns,
@@ -14,6 +11,9 @@ from ...controller.client_controller import ClientResource, ClientResourceID
 from ...controller.order_controller import OrderResource, OrderResourceID
 from ...controller.product_controller import ProductResource, ProductResourceID
 from ...controller.restaurant_controller import RestaurantResource, RestaurantResourceID
+
+from flask import Blueprint
+from flask_restx import Api, fields
 
 
 bp = Blueprint("restapi", __name__, url_prefix="/api/v1")
@@ -39,11 +39,9 @@ restaurant_model = api.model(
         "url_image_banner": fields.String(
             required=True, description="URL do banner do restaurante"
         ),
-        "horario_funcionamento": fields.String(
-            required=False, description="Horário de funcionamento"
-        ),
-        "horario_fechamento": fields.String(
-            required=False, description="Horário de fechamento"
+         "telephone": fields.String(
+            required=True, description="Telefone do restaurante"
+
         ),
     },
 )
@@ -80,39 +78,16 @@ order_model = api.model(
     },
 )
 
-client_model = api.model(
-    "Client",
-    {
-        "client_name": fields.String(required=True, description="Nome do cliente"),
-        "client_cellphone": fields.String(
-            required=True, description="Celular do cliente"
-        ),
-        "client_address": fields.String(
-            required=True, description="Endereço do cliente"
-        ),
-        "client_address_number": fields.Integer(
-            required=True, description="Número do endereço do cliente"
-        ),
-        "client_address_complement": fields.String(
-            required=True, description="Complemento do endereço do cliente"
-        ),
-        "client_address_neighborhood": fields.String(
-            required=True, description="Bairro do endereço do cliente"
-        ),
-        "client_zip_code": fields.String(
-            required=True, description="CEP do endereço do cliente"
-        ),
-    },
-)
+from ...controller.restaurant_controller import RestaurantResource, RestaurantResourceID
+from project.doc_model.doc_models import api, bp, restaurant_model, user_model, product_model, client_model, order_model
 
-# Adicionar os modelos aos namespaces
+
 restaurant_ns.models["RestaurantModel"] = restaurant_model
 user_ns.models["UserModel"] = user_model
 product_ns.models["ProductModel"] = product_model
 client_ns.models["ClientModel"] = client_model
 order_ns.models["OrderModel"] = order_model
 
-# # Adicionar os recursos aos namespaces
 restaurant_ns.add_resource(RestaurantResource, "/")
 restaurant_ns.add_resource(RestaurantResourceID, "/<int:id>/products")
 
@@ -129,7 +104,6 @@ order_ns.add_resource(OrderResource, "/")
 order_ns.add_resource(OrderResourceID, "/<int:id>")
 
 
-# Adicionar os namespaces ao API
 api.add_namespace(restaurant_ns)
 api.add_namespace(user_ns)
 api.add_namespace(product_ns)

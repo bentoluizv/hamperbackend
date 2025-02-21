@@ -39,6 +39,7 @@ class RestaurantSchema(ma.SQLAlchemyAutoSchema):
         model = Restaurant
         load_instance = True
         include_relationships = True
+        exclude = ["associated_products"]
 
 
 class UserSchema(ma.SQLAlchemyAutoSchema):

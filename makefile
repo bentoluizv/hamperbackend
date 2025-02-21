@@ -20,8 +20,16 @@ upgrade:
 env-default:
 	export FLASK_ENV=default && export FLASK_APP=project && python -m project run
 
-env-development:
-	export FLASK_APP=project && export FLASK_ENV=development && python -m project run
+
+env-local:
+	export FLASK_APP=project
+	export FLASK_ENV=local
+	python main.py
+
+env-dev:
+	export FLASK_APP=project
+	export FLASK_ENV=dev
+	python main.py
 
 env-production:
 	export FLASK_APP=project && export FLASK_ENV=production && python -m project run

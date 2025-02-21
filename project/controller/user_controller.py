@@ -3,19 +3,12 @@ from flask import abort, request
 from flask_restx import Resource
 from project.ext.serializer import UserSchema
 
-from project.service.user_service import (
-    delete_user,
-    get_all_users,
-    get_one_user,
-    post_user,
-    update_user,
-)
-from typing import Tuple, Dict, Any, List
-from project.utils.redis_utils import (
-    delete_redis_value,
-    get_redis_value,
-    set_redis_value,
-)
+from project.service.user_service import (delete_user, get_all_users,
+                                          get_one_user, post_user, update_user)
+from project.utils.redis_utils import delete_redis_value, get_redis_value, set_redis_value
+from project.doc_model.doc_models import user_model, api
+
+
 
 user_schema_list = UserSchema(many=True)
 user_schema = UserSchema(many=False)
@@ -32,7 +25,9 @@ class UserResource(Resource):
         set_redis_value(key_redis, json.dumps(users))
         return users, 200
 
-    def post(self) -> Tuple[Dict[str, str], int]:
+    @api.expect(user_model)
+    def post(self):
+
         try:
             user_data = request.json
             post_user(user_data)
@@ -44,13 +39,16 @@ class UserResource(Resource):
 
 
 class UserResourceID(Resource):
-    def get(self, id) -> Tuple[Dict[str, Any], int]:
+    def get(self, id: int):
+
         if user := get_one_user(id):
             return user_schema.dump(user), 200  # type: ignore
         else:
             return {"error": f"Usuário com ID {id} não encontrado."}, 404
 
-    def patch(self, id) -> Tuple[Dict[str, str], int]:
+    @api.expect(user_model)
+    def patch(self, id: int):
+
         try:
             user_data = request.json
             result = update_user(id, user_data)
@@ -63,7 +61,8 @@ class UserResourceID(Resource):
         except Exception as e:
             return {"error": str(e)}, 500
 
-    def delete(self, id) -> Tuple[Dict[str, str], int]:
+    def delete(self, id: int):
+
         try:
             result = delete_user(id)
 

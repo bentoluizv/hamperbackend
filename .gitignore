@@ -64,8 +64,3 @@ MANIFEST
 
 # Diretórios específicos do Flask a serem excluídos
 instance/
-migrations/
-
-# Arquivo de cobertura de código
-.coverage
-.pytest_cache/
