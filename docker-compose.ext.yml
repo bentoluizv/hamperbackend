@@ -9,3 +9,5 @@ services:
     environment:
       - FLASK_ENV=staging
       - FLASK_APP=project
+    volumes:
+      - .:/app
